@@ -51,7 +51,7 @@ def main():
 
         game.update()
         
-        display.render()
+        display.render(game.OBJECTS)
 
         CLOCK.tick(FPS)
 

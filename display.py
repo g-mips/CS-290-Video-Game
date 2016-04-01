@@ -1,5 +1,6 @@
 import pygame
 
+
 SCREEN = None
 
 COLORS = {
@@ -11,8 +12,33 @@ COLORS = {
 }
 
 IMAGES = {}
-OBJECTS = []
 
+class Renderable(object):
+    def __init__(self, sprite_map, z_index=0):
+        self.sprite_map = sprite_map
+        self.z_index = z_index
+        
+    def render(self, screen):
+        pass
+
+    def __lt__(self, other):
+        return self.z_index < other.z_index
+
+    def __le__(self, other):
+        return self.z_index <= other.z_index
+    
+    def __eq__(self, other):
+        return self.z_index == other.z_index
+    
+    def __ne__(self, other):
+        return self.z_index != other.z_index
+    
+    def __gt__(self, other):
+        return self.z_index > other.z_index
+
+    def __ge__(self, other):
+        return self.z_index >= other.z_index
+    
 def init(width, height, title):
     global SCREEN
 
@@ -21,16 +47,14 @@ def init(width, height, title):
 
     pygame.display.set_caption(title)
 
-
-def render():
+def render(objects):
     global SCREEN
     global COLORS
-    global OBJECTS
 
     SCREEN.fill(COLORS["WHITE"])
 
-    for object in OBJECTS:
-        pass
+    for object in sorted(objects):
+        object.render(SCREEN)
     
     pygame.display.flip()
 
