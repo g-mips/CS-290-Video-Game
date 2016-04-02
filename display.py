@@ -13,9 +13,10 @@ COLORS = {
 
 IMAGES = {}
 
+
 class Renderable(object):
-    def __init__(self, sprite_map, z_index=0):
-        self.sprite_map = sprite_map
+    def __init__(self, sprite_maps, z_index=0):
+        self.sprite_maps = sprite_maps
         self.z_index = z_index
         
     def render(self, screen):
@@ -50,21 +51,42 @@ def init(width, height, title):
 def render(objects):
     global SCREEN
     global COLORS
-
+    
     SCREEN.fill(COLORS["WHITE"])
 
-    objects["MAP"].render(SCREEN)
+    if not objects["MAP"].rendered:
+        objects["MAP"].render(SCREEN)
+        
+        for object in sorted(objects["OBJECTS"]):
+            object.render(SCREEN)
     
-    for object in sorted(objects["OBJECTS"]):
-        object.render(SCREEN)
-    
-    pygame.display.flip()
+            pygame.display.flip()
+    else:
+        rects = []
 
-def get_image(filename):
+        for object in sorted(objects["OBJECTS"]):
+            rects.append(object.get_rect())
+
+        objects["MAP"].render_part(SCREEN, rects)
+
+        for object in sorted(objects["OBJECTS"]):
+            object.render(SCREEN)
+            
+        pygame.display.update(rects)              
+
+def get_image(filenames):
     global IMAGES
-    image = pygame.image.load(filename)
-    image.convert_alpha()
 
-    IMAGES[filename] = image
+    images = []
 
-    return image
+    for filename in filenames:
+        if filename in IMAGES:
+            images.append(IMAGES[filename])
+        else:
+            image = pygame.image.load(filename)
+            image.convert_alpha()
+
+            IMAGES[filename] = image
+            images.append(image)
+
+    return images;

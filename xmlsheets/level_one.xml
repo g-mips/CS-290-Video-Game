@@ -1,3 +1,7 @@
-<Map width="300" height="20">
-	<Tile name="grassCenter.png" x="40" y="40" />
+<Map width="16" height="12">
+	<TileGroup name="bg.png" sheetindex="1" minx="0" maxx="16" miny="0" maxy="13" />
+	<TileGroup name="grassMid.png" sheetindex="0" minx="1" maxx="15" miny="8" maxy="9" />
+	<TileGroup name="grassCenter.png" sheetindex="0" minx="0" maxx="16" miny="9" maxy="13" />
+	<Tile name="grassLeft.png" sheetindex="0" x="0" y="8" />
+	<Tile name="grassRight.png" sheetindex="0" x="15" y="8" />
 </Map>

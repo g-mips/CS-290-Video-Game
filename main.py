@@ -13,7 +13,7 @@ WIDTH  = 800
 HEIGHT = 600
 TITLE  = "Musical Alien"
 CLOCK  = pygame.time.Clock()
-FPS    = 30
+FPS    = 60
 
 def main():
     '''
@@ -43,17 +43,15 @@ def main():
     event_handler.register("QUIT", overall.quit)
     event_handler.register("KEYDOWN", overall.key_quit)
 
-    game.START_SCREEN = True
+    game.load_level(1)
     
     # Main game loop
     while True:
         event_handler.handle_events()
-
         game.update()
-        
         display.render(game.OBJECTS)
 
-        #CLOCK.tick(FPS)
+        CLOCK.tick(FPS)
 
     # Should never reach here
     pygame.quit()

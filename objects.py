@@ -38,16 +38,12 @@ PLAYER_INFO = [ {
 
 PLAYER_INFO = xml_parser.load_players(PLAYER_INFO, Players, Actions)
 
-
 class GameObject(display.Renderable):
-    def __init__(self, input, physics, graphics):
-        super(GameObject, self).__init__(display.get_image(xml_parser.MAIN_SPRITE_SHEET))
+    def __init__(self, input, physics, graphics, sprite_maps):
+        super(GameObject, self).__init__(display.get_image(sprite_maps))
 
         self.input = input
-        self.input.game_object = self
-
         self.physics = physics
-
         self.graphics = graphics
         
         self.isAlive  = True
@@ -67,7 +63,6 @@ class GameObject(display.Renderable):
         self.x_flip = False
         self.y_flip = False
 
-        self.events    = []
         self.keys_down = []
         self.keys_up   = []
 
@@ -81,13 +76,16 @@ class GameObject(display.Renderable):
 
 
 class Alien(GameObject):
-    def __init__(self, input, physics, graphics):
-        super(Alien, self).__init__(input, physics, graphics)
+    def __init__(self, input, physics, graphics, sprite_maps):
+        super(Alien, self).__init__(input, physics, graphics, sprite_maps)
+
         self.current_player = Players.GREEN
         self.current_action = Actions.STAND
+
         s_width = 50
         s_height = s_width * 2
         self.scale_factor   = (s_width, s_height)
+
         self.air_time = 0
 
     def render(self, screen):
@@ -97,7 +95,7 @@ class Alien(GameObject):
         screen.blit(
             pygame.transform.scale(
                 pygame.transform.flip(
-                    self.sprite_map.subsurface(
+                    self.sprite_maps[0].subsurface(
                         pygame.Rect(
                             PLAYER_INFO[self.current_player][self.current_action][int(self.frame)][0],
                             PLAYER_INFO[self.current_player][self.current_action][int(self.frame)][1]
@@ -110,6 +108,9 @@ class Alien(GameObject):
             ),
             (self.x, self.y)
         )
+
+    def get_rect(self):
+        return pygame.Rect((self.x-self.dx, self.y-self.dy), (self.scale_factor[0], self.scale_factor[1]))
 
 if __name__ == "__main__":
     xml_parser.load_xml(MAIN_XML_SHEET)

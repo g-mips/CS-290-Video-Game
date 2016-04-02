@@ -1,7 +1,9 @@
 import inspect
 
+DEBUG = False
 def debug(message):
-    log(message, "DEBUG: ")
+    if DEBUG:
+        log(message, "DEBUG: ")
 
 def error(message):
     log(message, "ERROR: ")

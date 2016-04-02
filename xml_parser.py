@@ -7,16 +7,10 @@ MAIN_SPRITE_SHEET = os.path.join('imgs', 'spritesheet_complete.png')
 MAIN_XML_SHEET    = os.path.join('xmlsheets', 'spritesheet_complete.xml')
 TREE = xml.etree.ElementTree.parse(MAIN_XML_SHEET)
 
-#def load_xml(xml_sheet):
-#    global TREE
-#    TREE = xml.etree.ElementTree.parse(xml_sheet)
 
 def load_players(player_info, players, actions):
     global TREE
 
-    #   if TREE is None:
-    #       logger.error("Please call load_xml(xml_sheet) first!")
-    #   else:
     root = TREE.getroot()
     for child in root:
         atts = child.attrib
@@ -56,25 +50,34 @@ def load_player(player_info, player_index, actions, atts):
 
     return player_info
 
-def load_map_info():
+def load_map_info(xml_sheet=None):
     global TREE
 
-    map_info = {}
+    if xml_sheet is None:
+        map_info = {}
     
-    #    if TREE is None:
-    #    logger.error("Please call load_xml(xml_sheet) first!")
-    #else:
-    root = TREE.getroot()
-    for child in root:
-        atts = child.attrib
-        info = [(int(atts['x']), int(atts['y'])), (int(atts['width']), int(atts['height']))]
+        root = TREE.getroot()
+        for child in root:
+            atts = child.attrib
+            info = [(int(atts['x']), int(atts['y'])), (int(atts['width']), int(atts['height']))]
         
-        if 'grass' in atts['name']:
-            map_info[atts['name']] = info
+            if 'grass' in atts['name']:
+                map_info[atts['name']] = info
             
-    return map_info
+        return map_info
+    else:
+        map_info = {}
+        
+        root = xml.etree.ElementTree.parse(xml_sheet).getroot()
+        for child in root:
+            atts = child.attrib
+            info = [(int(atts['x']), int(atts['y'])), (int(atts['width']), int(atts['height']))]
+            
+            map_info[atts['name']] = info
 
-def load_map(level_xml):
+        return map_info
+             
+def load_map(level_xml, tile_size):
     level = xml.etree.ElementTree.parse(level_xml).getroot()
     tiles = []
 
@@ -82,9 +85,32 @@ def load_map(level_xml):
     height = int(level.attrib['height'])
 
     for child in level:
-        tiles.append((child.attrib['name'], int(child.attrib['x']), int(child.attrib['y'])))
-    
-    return (tiles, width, height)
+        if child.tag == "Tile":
+            tiles.append((child.attrib['name'], int(child.attrib['x'])*tile_size,
+                          int(child.attrib['y'])*tile_size, int(child.attrib['sheetindex'])))
+        elif child.tag == "TileGroup":
+            min_x = int(child.attrib['minx'])
+            max_x = int(child.attrib['maxx'])
+            min_y = int(child.attrib['miny'])
+            max_y = int(child.attrib['maxy'])
 
-            
+            for x in range(min_x, max_x):
+                for y in range(min_y, max_y):
+                    tiles.append((child.attrib['name'], x*tile_size, y*tile_size,
+                                  int(child.attrib['sheetindex'])))
+
+    #{ 0: { 0: [], 50: [] }, 50: }
+    sorted_tiles = {}
     
+    for tile in tiles:
+        if tile[1] in sorted_tiles:
+            if tile[2] in sorted_tiles[tile[1]]:
+                sorted_tiles[tile[1]][tile[2]].append(tile)
+            else:
+                sorted_tiles[tile[1]][tile[2]] = [ tile ]
+        else:
+            sorted_tiles[tile[1]] = {}
+            sorted_tiles[tile[1]][tile[2]] = [ tile ]
+                                      
+    
+    return (sorted_tiles, width, height)
