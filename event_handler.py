@@ -38,9 +38,18 @@ def register(event, handler):
     RETURN
         NONE
     '''
-    if event in handlers:
+    if event in handlers and handler not in handlers[event]:
         logger.debug(event)
         handlers[event].append(handler)
+
+def remove(event, handler):
+    if event in handlers and handler in handlers[event]:
+        logger.debug(event)
+        handlers[event].remove(handler)
+
+def remove_all():
+    for event in handlers:
+        handlers[event] = []
 
 def handle_events():
     '''

@@ -146,7 +146,6 @@
 	<SubTexture name="gemRed.png" x="2470" y="1820" width="128" height="128"/>
 	<SubTexture name="gemYellow.png" x="2470" y="1690" width="128" height="128"/>
 	<SubTexture name="grass.png" x="1690" y="520" width="128" height="128"/>
-	<SubTexture name="grass.png" x="1690" y="520" width="128" height="128"/>
 	<SubTexture name="grassCenter.png" x="1690" y="390" width="128" height="128"/>
 	<SubTexture name="grassCenter_round.png" x="1690" y="260" width="128" height="128"/>
 	<SubTexture name="grassCliffAlt_left.png" x="1690" y="130" width="128" height="128"/>

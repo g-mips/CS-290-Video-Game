@@ -53,7 +53,9 @@ def render(objects):
 
     SCREEN.fill(COLORS["WHITE"])
 
-    for object in sorted(objects):
+    objects["MAP"].render(SCREEN)
+    
+    for object in sorted(objects["OBJECTS"]):
         object.render(SCREEN)
     
     pygame.display.flip()

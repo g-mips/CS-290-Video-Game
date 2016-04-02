@@ -53,7 +53,7 @@ def main():
         
         display.render(game.OBJECTS)
 
-        CLOCK.tick(FPS)
+        #CLOCK.tick(FPS)
 
     # Should never reach here
     pygame.quit()
