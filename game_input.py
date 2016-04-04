@@ -4,9 +4,8 @@ import objects
 import logger
 
 class PlayerInput(object):
-    ACCELERATION = 3
-    MAX_ACCELERATION = 1
-    AVAILABLE_KEYS = [ pygame.K_RIGHT, pygame.K_LEFT, pygame.K_DOWN, pygame.K_SPACE ]
+    ACCELERATION = 3.0
+    AVAILABLE_KEYS = [ pygame.K_RIGHT, pygame.K_LEFT, pygame.K_DOWN, pygame.K_SPACE, pygame.K_RETURN ]
     
     def __init__(self):
         self.events = []
@@ -34,16 +33,6 @@ class PlayerInput(object):
                     game_object.keys_up.append(event.key)
         self.events = []
 
-        # Execute the keys that are down
-        for event in game_object.keys_down:
-            if event == pygame.K_RIGHT:
-                game_object.dx = self.ACCELERATION
-            elif event == pygame.K_LEFT:
-                game_object.dx = -self.ACCELERATION
-            elif event == pygame.K_SPACE and game_object.dy == 0:
-                game_object.dy = -self.ACCELERATION
-                game_object.air_time = 1
-
         # Execute the keys that are up
         for event in game_object.keys_up:
             if event == pygame.K_RIGHT:
@@ -55,3 +44,15 @@ class PlayerInput(object):
                 game_object.air_time = 0
 
         game_object.keys_up = []
+        
+        # Execute the keys that are down
+        for event in game_object.keys_down:
+            if event == pygame.K_RIGHT:
+                game_object.dx = self.ACCELERATION
+            elif event == pygame.K_LEFT:
+                game_object.dx = -self.ACCELERATION
+            elif event == pygame.K_SPACE and game_object.dy == 0 and game_object.air_time == 0:
+                game_object.dy = -self.ACCELERATION
+                game_object.air_time = 1
+                game_object.keys_down.remove(event)
+

@@ -1,18 +1,10 @@
-import logger
-import event_handler
-import display
-import objects
-import overall
 import game
 
 import sys
-import inspect
-import pygame
 
 WIDTH  = 800
 HEIGHT = 600
 TITLE  = "Musical Alien"
-CLOCK  = pygame.time.Clock()
 FPS    = 60
 
 def main():
@@ -25,36 +17,12 @@ def main():
     RETURN:
         NONE
     '''
-    global WIDTH
-    global HEIGHT
-    global TITLE
-    global CLOCK
-    global FPS
+
+    game.initialize(WIDTH, HEIGHT, TITLE)
     
-    # Initialize PyGame
-    num_successes, num_fails = pygame.init()
-
-    logger.debug("Number of modules initialized: " + str(num_successes))
-    logger.debug("Number of modules failed: " + str(num_fails))
-
-    # Initialize display
-    display.init(WIDTH, HEIGHT, TITLE)
-
-    event_handler.register("QUIT", overall.quit)
-    event_handler.register("KEYDOWN", overall.key_quit)
-
     game.load_level(1)
-    
-    # Main game loop
-    while True:
-        event_handler.handle_events()
-        game.update()
-        display.render(game.OBJECTS)
 
-        CLOCK.tick(FPS)
-
-    # Should never reach here
-    pygame.quit()
+    game.game_loop(FPS)
     
     return 0
 

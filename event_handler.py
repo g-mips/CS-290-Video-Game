@@ -41,11 +41,17 @@ def register(event, handler):
     if event in handlers and handler not in handlers[event]:
         logger.debug(event)
         handlers[event].append(handler)
+    else:
+        logger.error("Either event -- " + str(event) + " -- is not in handlers or handler -- " +
+                     str(handler) + " -- is in handlers[event]")
 
 def remove(event, handler):
     if event in handlers and handler in handlers[event]:
         logger.debug(event)
         handlers[event].remove(handler)
+    else:
+        logger.error("Either event -- " + str(event) + " -- is not in handlers or handler -- " +
+                     str(handler) + " -- is not in handlers[event]")
 
 def remove_all():
     for event in handlers:

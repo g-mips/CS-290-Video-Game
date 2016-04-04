@@ -1,6 +1,5 @@
 import pygame
 
-
 SCREEN = None
 
 COLORS = {
@@ -14,12 +13,51 @@ COLORS = {
 IMAGES = {}
 
 
-class Renderable(object):
-    def __init__(self, sprite_maps, z_index=0):
-        self.sprite_maps = sprite_maps
-        self.z_index = z_index
+class Renderable(pygame.sprite.Sprite):
+    def __init__(self, sprite_map, sprite_map_xml, z_index=0):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = None
+        self.rect = None
         
-    def render(self, screen):
+        self.sprite_map = sprite_map
+        self.sprite_map_xml = sprite_map_xml
+
+        self.z_index = z_index
+
+        self.clock = pygame.time.Clock()
+        self.frame = 0.0
+
+        self.x_flip = False
+        self.y_flip = False
+
+    def set_image(self, x, y, width, height):
+        self.sprite_map.set_clip(pygame.Rect(x, y, width, height))
+        self.image = self.sprite_map.subsurface(self.sprite_map.get_clip())
+        self.scale()
+        self.flip()
+
+    def set_rect(self):
+        self.rect = pygame.Rect(self.x, self.y, self.scale_factor[0], self.scale_factor[1])
+    
+    def scale(self):
+        self.image = pygame.transform.scale(self.image, self.scale_factor)
+
+    def flip(self):
+        self.image = pygame.transform.flip(self.image, self.x_flip, self.y_flip)
+
+    def get_sprite_info(self, sprite_name, mult_frames):
+        if not mult_frames:
+            return self.sprite_map_xml[sprite_name]
+        else:
+            sprites_info = []
+
+            for sprite in self.sprite_map_xml.keys():
+                if sprite_name in sprite:
+                    sprites_info.append(self.sprite_map_xml[sprite])
+                    
+            return sprites_info
+    
+    def pre_render(self):
         pass
 
     def __lt__(self, other):
@@ -48,45 +86,82 @@ def init(width, height, title):
 
     pygame.display.set_caption(title)
 
-def render(objects):
+def render(level):
+    '''
+    This draws everything found in the level.
+    '''
     global SCREEN
     global COLORS
+
+    objects = level["OBJECTS"]
     
     SCREEN.fill(COLORS["WHITE"])
 
-    if not objects["MAP"].rendered:
-        objects["MAP"].render(SCREEN)
-        
-        for object in sorted(objects["OBJECTS"]):
-            object.render(SCREEN)
+    #player_item_hit_list  = pygame.sprite.groupcollide(objects["PLAYER"], objects["ITEMS"], False, False)
+    #player_enemy_hit_list = pygame.sprite.groupcollide(objects["PLAYER"], objects["ENEMIES"], False, False)
+    #enemy_player_hit_list = pygame.sprite.groupcollide(objects["ENEMIES"], objects["PLAYER"], False, False)
+    #enemy_map_hit_list    = pygame.sprite.groupcollide(objects["ENEMIES"], objects["MAP"], False, False)
     
-            pygame.display.flip()
+    
+    if not level["RENDERED"]:
+        for group in objects:
+            objects[group].draw(SCREEN)
+        level["RENDERED"] = True
+        pygame.display.flip()
     else:
-        rects = []
+        player_map_hit_list   = pygame.sprite.groupcollide(objects["PLAYER"], objects["MAP"], False, False)
+        map_draw_list = pygame.sprite.OrderedUpdates()
 
-        for object in sorted(objects["OBJECTS"]):
-            rects.append(object.get_rect())
+        rect_list = [ objects["PLAYER"].sprite.rect ]
 
-        objects["MAP"].render_part(SCREEN, rects)
+        for player in player_map_hit_list:
+            for tile in player_map_hit_list[player]:
+                map_draw_list.add(tile)
 
-        for object in sorted(objects["OBJECTS"]):
-            object.render(SCREEN)
+        rect_list.extend(map_draw_list.draw(SCREEN))
+        objects["PLAYER"].draw(SCREEN)
+        
+        pygame.display.update(rect_list)
+
+    #else:
+    #objects["MAP"].draw(SCREEN)
+    #objects["ITEMS"].draw(SCREEN)
+    #objects["ENEMIES"].draw(SCREEN)
+    #objects["PLAYER"].draw(SCREEN)
+    #objects["HUD"].draw(SCREEN)
+    
+    #if not objects["MAP"].rendered:
+    #    objects["MAP"].render(SCREEN)
+        
+    #    for object in sorted(objects["OBJECTS"]):
+    #        object.render(SCREEN)
+    
+    
+    
+    #else:
+    #    rects = []
+
+    #    for object in sorted(objects["OBJECTS"]):
+    #        rects.append(object.get_rect())
+
+    #    objects["MAP"].render_part(SCREEN, rects)
+
+    #    for object in sorted(objects["OBJECTS"]):
+    #        object.render(SCREEN)
             
-        pygame.display.update(rects)              
+    #    pygame.display.update(rects)              
 
-def get_image(filenames):
+def get_image(filename):
     global IMAGES
 
-    images = []
+    if filename in IMAGES:
+        image = IMAGES[filename]
 
-    for filename in filenames:
-        if filename in IMAGES:
-            images.append(IMAGES[filename])
-        else:
-            image = pygame.image.load(filename)
-            image.convert_alpha()
-
-            IMAGES[filename] = image
-            images.append(image)
-
-    return images;
+        return image
+    else:
+        image = pygame.image.load(filename)
+        image.convert_alpha()
+        
+        IMAGES[filename] = image
+        
+        return image;

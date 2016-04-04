@@ -3,59 +3,37 @@ import pygame
 import display
 import xml_parser
 
-MAP_INFO = xml_parser.load_map_info()
+class TileCollision:
+    TOP    = 1 # 0000 0001
+    LEFT   = 2 # 0000 0010
+    BOTTOM = 4 # 0000 0100
+    RIGHT  = 8 # 0000 1000
 
-class Map(display.Renderable):
-    def __init__(self, level_xml, playable, sprite_maps):
-        super(Map, self).__init__(display.get_image(sprite_maps), -1)
-        self.tiles, self.width, self.height = xml_parser.load_map(level_xml, 50)
+class Tile(display.Renderable):
+    def __init__(self, sprite_sheet_xml, sprite_sheet, tile_name, x, y,
+                 scale_factor, collision, mult_frames, z_index):
+        super(Tile, self).__init__(display.get_image(sprite_sheet),
+                                   xml_parser.load_sprite_map_info(sprite_sheet_xml), z_index)
+        self.x = x*scale_factor[0]
+        self.y = y*scale_factor[1]
+        self.scale_factor = scale_factor
+        self.collision = collision
 
-        self.playable = playable
-        self.scale_factor = (50, 50)
-        self.rendered = False
+        self.mult_frames = mult_frames
 
-    def add_tiles(self, xml_sheet):
-        MAP_INFO.update(xml_parser.load_map_info(xml_sheet))
+        self.sprite_name = tile_name
+        self.tile_is_set = False
+        self.set_rect()
 
-    def update(self):
-        pass
+        
+    def update(self, *args):
+        '''
+        Sprite update.
 
-    def render_part(self, screen, rects):
-        for x in self.tiles:
-            for y in self.tiles[x]:
-                for tile in self.tiles[x][y]:
-                    tile_rect = pygame.Rect((tile[1], tile[2]),
-                                            (self.scale_factor[0], self.scale_factor[1]))
-
-                    if tile_rect.collidelist(rects) != -1:
-                        screen.blit(
-                            pygame.transform.scale(
-                                self.sprite_maps[tile[3]].subsurface(
-                                    pygame.Rect(
-                                        MAP_INFO[tile[0]][0],
-                                        MAP_INFO[tile[0]][1]
-                                    )
-                                ),
-                                self.scale_factor
-                            ),
-                            (tile[1], tile[2])
-                        )
-    
-    def render(self, screen):
-        for x in self.tiles:
-            for y in self.tiles[x]:
-                for tile in self.tiles[x][y]:
-                    screen.blit(
-                        pygame.transform.scale(
-                            self.sprite_maps[tile[3]].subsurface(
-                                pygame.Rect(
-                                    MAP_INFO[tile[0]][0],
-                                    MAP_INFO[tile[0]][1]
-                                )
-                            ),
-                            self.scale_factor
-                        ),
-                        (tile[1], tile[2])
-                    )
-        self.rendered = True
-
+        sprite_info: (x, y), (width, height)
+        '''
+        if not self.tile_is_set:
+            sprite_info = self.get_sprite_info(self.sprite_name, self.mult_frames)
+            self.set_image(sprite_info[0][0], sprite_info[0][1], sprite_info[1][0], sprite_info[1][1])
+            self.set_rect()
+            self.tile_is_set = True

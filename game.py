@@ -1,29 +1,89 @@
-import scenes
+import pygame
+import sys
 
-OBJECTS = {}
+import logger
+import event_handler
+import display
+import scenes
+import physics
+
+LEVEL = {
+    "OBJECTS":  {},
+    "RENDERED": False,
+    "LOADED":   False
+}
+
+CLOCK  = pygame.time.Clock()
+LEVEL_NUM  = 1
+
+def quit(event):
+    # TODO: Ask user if he really wants to quit
+    pygame.quit()
+    sys.exit(0)
+
+def key_quit(event):
+    if event.key == pygame.K_ESCAPE:
+        quit(event)
+
+def initialize(width, height, title):
+    '''
+    Starts pygame, initializes the display, makes the mouse invisible, and registers quit events.
+    '''
+    
+    num_successes, num_fails = pygame.init()
+
+    logger.debug("Number of modules initialized: " + str(num_successes))
+    logger.debug("Number of modules failed: " + str(num_fails))
+
+    # Initialize display
+    display.init(width, height, title)
+
+    event_handler.register("QUIT", quit)
+    event_handler.register("KEYDOWN", key_quit)
+
+    pygame.mouse.set_visible(False)
+
+def game_loop(fps):
+    '''
+    Game loops here indefinitely
+    '''
+    global CLOCK
+
+    while True:
+        event_handler.handle_events()
+        update()
+        display.render(LEVEL)
+
+        CLOCK.tick(fps)
+
 
 def load_level(level):
+    '''
+    This will load in all the objects of the level 'level' into OBJECTS
+    '''
     global OBJECTS
     
-    OBJECTS = scenes.load_level(level)
+    LEVEL["OBJECTS"]  = scenes.load_level(level)
+    LEVEL["RENDERED"] = False
+    LEVEL["LOADED"]   = True
+    LEVEL_NUM         = level + 1
 
 def update():
-    global OBJECTS
-    
-    # EVENTUALLY: call run_start()
+    '''
+    This goes through LEVEL and updates all the objects in each group. An update to an object is
+    through input, physics, and graphics. It does NOT draw/render the image of the object to the
+    screen.
+    '''
+    global LEVEL
+    global LEVEL_NUM
 
-    # Load first level, and objects
+    if not LEVEL["LOADED"]:
+        LEVEL["OBJECTS"] = scenes.load_level(LEVEL_NUM)
 
-    
-    # Check if new Map will be loaded (check player's position against goal in map)
-    
-    # If yes, increment to next map. If last map, call run_end()
-    
-    # If yes, remove all objects and load in new objects
-
-    OBJECTS["MAP"].update()
-    
-    for object in OBJECTS["OBJECTS"]:
-        if object.isAlive:
+    physics.PHYSICS_SYSTEM.load_objects(LEVEL["OBJECTS"])
+        
+    for group in LEVEL["OBJECTS"]:
+        for object in LEVEL["OBJECTS"][group]:
             object.update()
+            object.pre_render()
 

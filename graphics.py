@@ -1,6 +1,5 @@
 import pygame
 
-import logger
 import objects
 
 class PlayerGraphics(object):
@@ -14,7 +13,7 @@ class PlayerGraphics(object):
         '''
 
         '''
-
+        #sprites_info = []
         # Are we moving left or right?
         if game_object.dx > 0:
             game_object.x_flip = False
