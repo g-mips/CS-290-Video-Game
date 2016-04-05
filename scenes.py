@@ -34,7 +34,6 @@ def load_level(level):
                 sprite["Y"],
                 [sprite["SCALE_X"], sprite["SCALE_Y"]],
                 sprite["COLLISION"],
-                sprite["MULT_FRAMES"],
                 sprite["Z_INDEX"],
                 game_input.Input(),
                 physics.MapPhysics(),
@@ -50,7 +49,6 @@ def load_level(level):
                 sprite["Y"],
                 [sprite["SCALE_X"], sprite["SCALE_Y"]],
                 sprite["COLLISION"],
-                sprite["MULT_FRAMES"],
                 sprite["Z_INDEX"],
                 game_input.PlayerInput(),
                 physics.MobilePhysics(),
@@ -65,8 +63,19 @@ def load_level(level):
             # objects["HUD"].add()
             pass
         elif sprite["TYPE"] == "Enemy":
-            # objects["ENEMIES"].add()
-            pass
+            game_objects["ENEMIES"].add(objects.Mobile(
+                os.path.join('xmlsheets', sprite["XML_SHEET"]),
+                os.path.join('imgs', sprite["SPRITE_SHEET"]),
+                sprite["NAME"],
+                sprite["X"],
+                sprite["Y"],
+                [sprite["SCALE_X"], sprite["SCALE_Y"]],
+                sprite["COLLISION"],
+                sprite["Z_INDEX"],
+                game_input.Input(),
+                physics.MobilePhysics(),
+                graphics.EnemyGraphics()
+            ))
         elif sprite["TYPE"] == "Item":
             # objects["ITEMS"].add()
             pass

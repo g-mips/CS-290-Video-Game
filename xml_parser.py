@@ -43,7 +43,6 @@ def load_level(level_xml):
                             "COLLISION":    int(child.attrib['collision'], 2),
                             "SPRITE_SHEET": child.attrib['spriteSheet'],
                             "XML_SHEET":    child.attrib['xmlSheet'],
-                            "MULT_FRAMES":  bool(int(child.attrib['multFrames'])),
                             "Z_INDEX":      int(child.attrib['zIndex'])
                         })
             else:
@@ -57,7 +56,6 @@ def load_level(level_xml):
                     "COLLISION":    int(child.attrib['collision'], 2),
                     "SPRITE_SHEET": child.attrib['spriteSheet'],
                     "XML_SHEET":    child.attrib['xmlSheet'],
-                    "MULT_FRAMES":  bool(int(child.attrib['multFrames'])),
                     "Z_INDEX":      int(child.attrib['zIndex'])                
                 })
                 

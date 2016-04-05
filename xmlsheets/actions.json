@@ -1,0 +1,97 @@
+{
+	"alien": [
+		"CLIMB": "_climb",
+		"DUCK":  "_duck",
+		"FRONT": "_front",
+		"HIT":   "_hit",
+		"JUMP":  "_jump",
+		"STAND": "_stand",
+		"SWIM":  "_swim",
+		"WALK":  "_walk"
+	],
+/************** IGNORE ****************/
+	"snail": [
+		"STAND": "",
+		"DEAD":  "_shell",
+		"MOVE": "_move"
+	],
+
+	"barnacle": [
+		"STAND":  "",
+		"DEAD":   "_dead",
+		"ATTACK": "_attack"
+	],
+	
+	"fishBlue": [
+		"STAND": "",
+		"DEAD":  "_dead",
+		"JUMP":  "_fall"
+	],
+
+	"ladybug": [
+		"STAND": "",
+		"JUMP":  "_fly",
+		"MOVE":  "_move"
+	],
+
+	"slime": [
+		"STAND": "",
+		"DEAD":  "_dead",
+		"HIT":   "_hit",
+		"MOVE":  "_move"
+	],
+/*****************************************/
+	"bee": [
+		"STAND": "",
+		"DEAD":  "_dead",
+		"MOVE":  "_move"
+	],
+
+	"fish": [
+		"STAND": "",
+		"DEAD":  "_dead",
+		"MOVE":  "_move"
+	],
+
+	"fly": [
+		"STAND": "",
+		"DEAD":  "_dead",
+		"MOVE":  "_move"
+	],
+
+	"frog": [
+		"STAND": "",
+		"DEAD":  "_dead",
+		"MOVE":  "_move"
+	],
+	
+	"mouse": [
+		"STAND": "",
+		"DEAD":  "_dead",
+		"MOVE":  "_move"
+	],
+
+	"saw": [
+		"STAND": "",
+		"DEAD":  "_dead",
+		"MOVE":  "_move"
+	],
+
+	"sawHalf": [
+		"STAND": "",
+		"DEAD":  "_dead",
+		"MOVE":  "_move"
+	],
+
+	"slimeBlock": [
+		"STAND": "",
+		"DEAD":  "_dead",
+		"MOVE":  "_move"
+	],
+
+	"worm": [
+		"STAND": "",
+		"DEAD":  "_dead",
+		"MOVE":  "_move"
+	]
+}

@@ -1,4 +1,5 @@
 import pygame
+import re
 
 SCREEN = None
 
@@ -43,13 +44,16 @@ class Renderable(pygame.sprite.Sprite):
     def set_rect(self):
         self.rect = pygame.Rect(self.x, self.y, self.scale_factor[0], self.scale_factor[1])
 
-    def get_sprite_info(self, sprite_name, mult_frames):
+    def get_sprite_info(self, sprite_name):
         sprites_info = []
 
+        sprite_re = "^" + sprite_name
+        compile   = re.compile(sprite_re)
+        
         for sprite in self.sprite_map_xml.keys():
-            if sprite_name in sprite:
+            if compile.match(sprite) is not None:
                 sprites_info.append(self.sprite_map_xml[sprite])
-                    
+        
         return sprites_info
     
     def pre_render(self):
@@ -104,16 +108,19 @@ def render(level):
         level["RENDERED"] = True
         pygame.display.flip()
     else:
-        player_map_hit_list   = pygame.sprite.groupcollide(objects["PLAYER"], objects["MAP"], False, False)
+        map_hit_list   = pygame.sprite.groupcollide(objects["PLAYER"], objects["MAP"], False, False)
+        map_hit_list.update(pygame.sprite.groupcollide(objects["ENEMIES"], objects["MAP"], False, False))
         map_draw_list = pygame.sprite.OrderedUpdates()
 
         rect_list = [ objects["PLAYER"].sprite.rect ]
-
-        for player in player_map_hit_list:
-            for tile in player_map_hit_list[player]:
+        rect_list.extend(objects["ENEMIES"].sprites())
+        
+        for player in map_hit_list:
+            for tile in map_hit_list[player]:
                 map_draw_list.add(tile)
 
         rect_list.extend(map_draw_list.draw(SCREEN))
+        objects["ENEMIES"].draw(SCREEN)
         objects["PLAYER"].draw(SCREEN)
         
         pygame.display.update(rect_list)

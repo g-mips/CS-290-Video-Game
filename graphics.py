@@ -27,7 +27,6 @@ class PlayerGraphics(Graphics):
         '''
 
         '''
-        #sprites_info = []
         # Are we moving left or right?
         if game_object.dx > 0:
             game_object.x_flip = False
@@ -35,13 +34,30 @@ class PlayerGraphics(Graphics):
             game_object.x_flip = True
 
         # Are we in the air?
-        if game_object.dy > 0 or game_object.dy < 0:
-            game_object.current_action = objects.Actions.JUMP
+        if game_object.dy != 0:
+            game_object.current_action = objects.PlayerActions.JUMP
         else:
             # Are we walking? standing? or ducking?
             if game_object.dx != 0:
-                game_object.current_action = objects.Actions.WALK
+                game_object.current_action = objects.PlayerActions.WALK
             elif len(game_object.keys_down) == 0:
-                game_object.current_action = objects.Actions.STAND
+                game_object.current_action = objects.PlayerActions.STAND
             elif game_object.keys_down[0] == pygame.K_DOWN:
-                game_object.current_action = objects.Actions.DUCK
+                game_object.current_action = objects.PlayerActions.DUCK
+
+class EnemyGraphics(Graphics):
+    def __init__(self):
+        pass
+
+    def update(self, game_object):
+        if game_object.dx > 0:
+            game_object.x_flip = False
+        elif game_object.dx < 0:
+            game_object.x_flip = True
+
+        if game_object.dx != 0:
+            game_object.current_action = objects.EnemyActions.MOVE
+        else:
+            game_object.current_action = objects.EnemyActions.STAND
+
+        
