@@ -32,30 +32,25 @@ class Renderable(pygame.sprite.Sprite):
 
     def set_image(self, x, y, width, height):
         self.sprite_map.set_clip(pygame.Rect(x, y, width, height))
-        self.image = self.sprite_map.subsurface(self.sprite_map.get_clip())
-        self.scale()
-        self.flip()
+        self.image = pygame.transform.flip(
+            pygame.transform.scale(
+                self.sprite_map.subsurface(self.sprite_map.get_clip()),
+                self.scale_factor),
+            self.x_flip,
+            self.y_flip
+        )
 
     def set_rect(self):
         self.rect = pygame.Rect(self.x, self.y, self.scale_factor[0], self.scale_factor[1])
-    
-    def scale(self):
-        self.image = pygame.transform.scale(self.image, self.scale_factor)
-
-    def flip(self):
-        self.image = pygame.transform.flip(self.image, self.x_flip, self.y_flip)
 
     def get_sprite_info(self, sprite_name, mult_frames):
-        if not mult_frames:
-            return self.sprite_map_xml[sprite_name]
-        else:
-            sprites_info = []
+        sprites_info = []
 
-            for sprite in self.sprite_map_xml.keys():
-                if sprite_name in sprite:
-                    sprites_info.append(self.sprite_map_xml[sprite])
+        for sprite in self.sprite_map_xml.keys():
+            if sprite_name in sprite:
+                sprites_info.append(self.sprite_map_xml[sprite])
                     
-            return sprites_info
+        return sprites_info
     
     def pre_render(self):
         pass

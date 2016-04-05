@@ -2,7 +2,6 @@ import pygame
 import os
 
 import xml_parser
-import map
 import objects
 import game_input
 import physics
@@ -27,7 +26,7 @@ def load_level(level):
         
     for sprite in sprites:
         if sprite["TYPE"] == "Tile":
-            tile = map.Tile(
+            tile = objects.Tile(
                 os.path.join('xmlsheets', sprite["XML_SHEET"]),
                 os.path.join('imgs', sprite["SPRITE_SHEET"]),
                 sprite["NAME"],
@@ -36,11 +35,14 @@ def load_level(level):
                 [sprite["SCALE_X"], sprite["SCALE_Y"]],
                 sprite["COLLISION"],
                 sprite["MULT_FRAMES"],
-                sprite["Z_INDEX"]
+                sprite["Z_INDEX"],
+                game_input.Input(),
+                physics.MapPhysics(),
+                graphics.MapGraphics()
             )
             game_objects["MAP"].add(tile)
         elif sprite["TYPE"] == "Player":
-            player = objects.Alien(
+            player = objects.Mobile(
                 os.path.join('xmlsheets', sprite["XML_SHEET"]),
                 os.path.join('imgs', sprite["SPRITE_SHEET"]),
                 sprite["NAME"],
@@ -51,7 +53,7 @@ def load_level(level):
                 sprite["MULT_FRAMES"],
                 sprite["Z_INDEX"],
                 game_input.PlayerInput(),
-                physics.PlayerPhysics(),
+                physics.MobilePhysics(),
                 graphics.PlayerGraphics()
             )
             

@@ -67,17 +67,15 @@ class GameObject(display.Renderable):
         pass
 
 
-class Alien(GameObject):
+class Mobile(GameObject):
     def __init__(self, sprite_sheet_xml, sprite_sheet, sprite_name, x, y,
                  scale_factor, collision, mult_frames, z_index,
                  input, physics, graphics):
-        super(Alien, self).__init__(input, physics, graphics, sprite_sheet, sprite_sheet_xml,
-                                    z_index, x, y, sprite_name, scale_factor)
+        super(Mobile, self).__init__(input, physics, graphics, sprite_sheet, sprite_sheet_xml,
+                                     z_index, x, y, sprite_name, scale_factor)
 
         self.current_action = Actions.STAND
-
         self.mult_frames = mult_frames
-
         self.air_time = 0
 
     def pre_render(self):
@@ -89,6 +87,34 @@ class Alien(GameObject):
     
     def get_rect(self):
         return pygame.Rect((self.x-self.dx, self.y-self.dy), (self.scale_factor[0], self.scale_factor[1]))
+
+class Tile(GameObject):
+    def __init__(self, sprite_sheet_xml, sprite_sheet, tile_name, x, y,
+                 scale_factor, collision, mult_frames, z_index,
+                 input, physics, graphics):
+        super(Tile, self).__init__(input, physics, graphics, sprite_sheet, sprite_sheet_xml,
+                                   z_index, x, y, tile_name, scale_factor)
+        self.collision = collision
+
+        self.mult_frames = mult_frames
+
+        self.tile_is_set = False
+        self.set_rect()
+
+        
+    def pre_render(self):
+        '''
+        Sprite update.
+
+        sprite_info: (x, y), (width, height)
+        '''
+        if not self.tile_is_set:
+            sprites_info = self.get_sprite_info(self.sprite_name, self.mult_frames)
+            self.frame = (self.frame + (self.clock.tick() / 100.0)) % len(sprites_info)
+            sprite_info = sprites_info[int(self.frame)]
+            self.set_image(sprite_info[0][0], sprite_info[0][1], sprite_info[1][0], sprite_info[1][1])
+            self.set_rect()
+            self.tile_is_set = True
 
 if __name__ == "__main__":
     xml_parser.load_xml(MAIN_XML_SHEET)

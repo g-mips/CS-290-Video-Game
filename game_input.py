@@ -3,12 +3,19 @@ import pygame
 import objects
 import logger
 
-class PlayerInput(object):
+class Input(object):
+    def __init__(self):
+        self.events = []
+
+    def update(self, game_object):
+        pass
+        
+class PlayerInput(Input):
     ACCELERATION = 3.0
     AVAILABLE_KEYS = [ pygame.K_RIGHT, pygame.K_LEFT, pygame.K_DOWN, pygame.K_SPACE, pygame.K_RETURN ]
     
     def __init__(self):
-        self.events = []
+        super(PlayerInput, self).__init__()
 
     def register_event(self, event):
         self.events.append(event)

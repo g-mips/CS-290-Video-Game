@@ -13,68 +13,82 @@ class PhysicsSystem(object):
     def load_objects(self, objects):
         self.objects = objects
 
-    def detect_collisions(self, game_object, group):
+    def mobile_collisions(self, game_object, group):
         tile_underneath = False
         checked_both = [ False, False ]
+
+        # Check each tile that is colliding with game_object
         for tile in group:
-            
-            #print(tile.rect.x)
-            #print(tile.rect.y)
-            #print(tile.rect.width)
-            #print(tile.rect.height)
-
-            
-        
-
-        #for tile in player_map_hit_list:
+            # Did we define what happens with both dx and dy?
             if checked_both[0] and checked_both[1]:
                 break
-                
-            if len(game_object.keys_down) != 0 and game_object.keys_down[0] == pygame.K_RETURN:
-                print(tile)
-            
-            if not checked_both[0]:
-                if game_object.dx > 0:
-                    if tile.collision & Collision.RIGHT == Collision.RIGHT:
-                        game_object.dx = 0
-                        checked_both[0] = True
-                elif game_object.dx < 0:
-                    if tile.collision & Collision.LEFT == Collision.LEFT:
-                        game_object.dx = 0
-                        checked_both[0] = True
 
-            # Going DOWN
-            if not checked_both[1]:
-                if game_object.dy > 0:
-                    if tile.collision & Collision.BOTTOM == Collision.BOTTOM:
-                        game_object.y = tile.rect.y - 1 - game_object.rect.height
-                        game_object.dy = 0
-                        game_object.on_land = True
-                        checked_both[1] = True
-                        
-                # Going UP
-                elif game_object.dy < 0:
-                    if tile.collision & Collision.TOP == Collision.TOP:
-                        #game_object.y =
-                        game_object.dy = 0
-                        game_object.on_land = False
-                        checked_both[1] = True
+            # Check dx
+            if not checked_both[0]:
+                # Are we moving right?
+                if game_object.dx > 0:
+                    if tile.collision & Collision.LEFT == Collision.LEFT:
+                        if game_object.rect.y + game_object.rect.height >= tile.rect.y + 5 and \
+                           game_object.rect.x < tile.rect.x:
+                            game_object.dx = 0
+                            checked_both[0] = True
+
+                # Are we moving left?
+                elif game_object.dx < 0:
+                    if tile.collision & Collision.RIGHT == Collision.RIGHT:
+                        if game_object.rect.y + game_object.rect.height >= tile.rect.y + 5 and \
+                           game_object.rect.x < tile.rect.x + tile.rect.width:
+                            game_object.dx = 0
+                            checked_both[0] = True
                             
-                # Standing still in the Y direction
-                else:
+            # Check dy
+            if not checked_both[1]:
+                # Are we moving down?
+                if game_object.dy > 0:
+                    if tile.collision & Collision.TOP == Collision.TOP:                            
+                        if not \
+                           (game_object.rect.x + 3 > tile.rect.x + tile.rect.width and \
+                            game_object.rect.x + 3 + game_object.rect.width >
+                            tile.rect.x + tile.rect.width) or \
+                           (game_object.rect.x + game_object.rect.width < tile.rect.x + 3 and \
+                            game_object.rect.x < tile.rect.x + 3):
+                            game_object.dy = 0
+                            checked_both[1] = True
+                            game_object.on_land = True
+
+                # Are we moving up?
+                elif game_object.dy < 0:
                     if tile.collision & Collision.BOTTOM == Collision.BOTTOM:
+                        if game_object.rect.y + 3 > tile.rect.y + tile.rect.height:
+                            game_object.dy
+
+                # Are we not moving?
+                elif game_object.dy == 0:
+                    if tile.collision & Collision.TOP == Collision.TOP:
                         game_object.on_land = True
                         tile_underneath = True
                         checked_both[1] = True
                     elif not tile_underneath:
                         game_object.on_land = False
+                        game_object.dy = 3.0
 
-        return tile_underneath
-    
-        
 PHYSICS_SYSTEM = PhysicsSystem()
 
-class PlayerPhysics(object):
+class Physics(object):
+    def __init__(self):
+        pass
+
+    def update(self, game_object):
+        pass
+
+class MapPhysics(Physics):
+    def __init__(self):
+        pass
+
+    def update(self, game_object):
+        pass
+
+class MobilePhysics(Physics):
     def __init__(self):
         pass
 
@@ -82,22 +96,12 @@ class PlayerPhysics(object):
         global PHYSICS_SYSTEM
 
         # Collision Detection
-        player_map_hit_list   = pygame.sprite.spritecollide(game_object, PHYSICS_SYSTEM.objects["MAP"], False)
+        map_hit_list   = pygame.sprite.spritecollide(game_object, PHYSICS_SYSTEM.objects["MAP"], False)
 
-        print(game_object.dy)
-
-        PHYSICS_SYSTEM.detect_collisions(game_object, player_map_hit_list)
+        PHYSICS_SYSTEM.mobile_collisions(game_object, map_hit_list)
 
         game_object.x += game_object.dx
         game_object.y += game_object.dy
-
-        if not game_object.on_land and game_object.dy == 0.0:
-            game_object.dy = 3.0
-            game_object.y += game_object.dy
-                        
-                #elif tile.collision & 4 != 4:
-                #    game_object.dy = 3.0
-
 
         # Air Time
         if game_object.air_time > 0 and game_object.air_time < 10:

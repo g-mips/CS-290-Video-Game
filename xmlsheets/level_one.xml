@@ -1,7 +1,5 @@
 <Map width="16" height="12">
 	<TileGroup name="bg.png" xmlSheet="bg.xml" spriteSheet="bg.png" collision="0000" scaleX="50" scaleY="50" minx="0" maxx="16" miny="0" maxy="13" zIndex="-2" multFrames="0" />
-	<TileGroup name="grassCenter.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" minx="0" maxx="16" miny="9" maxy="13" zIndex="-1" multFrames="0" />
-	<TileGroup name="grassMid.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" minx="1" maxx="15" miny="8" maxy="9" zIndex="-1" multFrames="0" />
 	<Tile name="grassLeft.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" x="0" y="8" zIndex="-1" multFrames="0" />
 	<Tile name="grassRight.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" x="15" y="8" zIndex="-1" multFrames="0" />
 	<Tile name="signRight.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="0000" scaleX="50" scaleY="50" x="0" y="7" zIndex="-1" multFrames="0" />

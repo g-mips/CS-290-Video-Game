@@ -2,7 +2,21 @@ import pygame
 
 import objects
 
-class PlayerGraphics(object):
+class Graphics(object):
+    def __init__(self):
+        pass
+
+    def update(self, game_object):
+        pass
+
+class MapGraphics(Graphics):
+    def __init__(self):
+        pass
+
+    def update(self, game_object):
+        pass
+
+class PlayerGraphics(Graphics):
     '''
 
     '''
