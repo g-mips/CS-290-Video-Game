@@ -1,4 +1,0 @@
-ALIVE_OBJECTS = []
-
-def update():
-    pass

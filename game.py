@@ -37,6 +37,8 @@ def initialize(width, height, title):
 
     # Initialize display
     display.init(width, height, title)
+    physics.PHYSICS_SYSTEM.width = width
+    physics.PHYSICS_SYSTEM.height = height
 
     event_handler.register("QUIT", quit)
     event_handler.register("KEYDOWN", key_quit)
@@ -82,8 +84,7 @@ def update():
 
     physics.PHYSICS_SYSTEM.load_objects(LEVEL["OBJECTS"])
         
-    for group in LEVEL["OBJECTS"]:
-        for object in LEVEL["OBJECTS"][group]:
-            object.update()
-            object.pre_render()
+    for object in LEVEL["OBJECTS"]:
+        object.update()
+        object.pre_render()
 

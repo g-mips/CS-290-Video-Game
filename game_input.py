@@ -9,7 +9,17 @@ class Input(object):
 
     def update(self, game_object):
         pass
-        
+
+class EnemyInput(Input):
+    def __init__(self):
+        super(EnemyInput, self).__init__()
+        self.acceleration = 1.0
+
+    def update(self, game_object):
+        if game_object.dx == 0:
+            self.acceleration = -self.acceleration
+        game_object.dx = self.acceleration
+
 class PlayerInput(Input):
     ACCELERATION = 3.0
     AVAILABLE_KEYS = [ pygame.K_RIGHT, pygame.K_LEFT, pygame.K_DOWN, pygame.K_SPACE, pygame.K_RETURN ]

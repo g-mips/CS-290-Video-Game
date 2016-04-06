@@ -135,9 +135,9 @@
 	<SubTexture name="flagYellow1.png" x="2600" y="520" width="128" height="128"/>
 	<SubTexture name="flagYellow2.png" x="2600" y="390" width="128" height="128"/>
 	<SubTexture name="flagYellow_down.png" x="2600" y="260" width="128" height="128"/>
-	<SubTexture name="fly.png" x="3380" y="520" width="128" height="128"/>
-	<SubTexture name="fly_dead.png" x="3380" y="390" width="128" height="128"/>
-	<SubTexture name="fly_move.png" x="3380" y="260" width="128" height="128"/>
+	<SubTexture name="fly_move2.png" x="3380" y="520" width="128" height="128"/>
+	<SubTexture name="fly_dead.png" x="3380" y="260" width="128" height="128"/>
+	<SubTexture name="fly_move1.png" x="3380" y="390" width="128" height="128"/>
 	<SubTexture name="frog.png" x="3380" y="130" width="128" height="128"/>
 	<SubTexture name="frog_dead.png" x="3380" y="0" width="128" height="128"/>
 	<SubTexture name="frog_move.png" x="3250" y="1820" width="128" height="128"/>

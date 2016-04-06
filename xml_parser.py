@@ -58,8 +58,8 @@ def load_level(level_xml):
                     "XML_SHEET":    child.attrib['xmlSheet'],
                     "Z_INDEX":      int(child.attrib['zIndex'])                
                 })
-                
-        XML_SPRITE_SHEETS[level_xml] = sprites
+
+        XML_SPRITE_SHEETS[level_xml] = sorted(sprites, key=lambda k: k['Z_INDEX']) 
     
     return XML_SPRITE_SHEETS[level_xml]
 
@@ -100,74 +100,3 @@ def load_sprite_map_info(sprite_map_xml):
         XML_SPRITE_SHEETS[sprite_map_xml] = map_info
 
     return XML_SPRITE_SHEETS[sprite_map_xml]
-
-"""
-def load_map(level_xml, tile_size):
-    level = xml.etree.ElementTree.parse(level_xml).getroot()
-    tiles = []
-
-    width = int(level.attrib['width'])
-    height = int(level.attrib['height'])
-
-    for child in level:
-        if child.tag == "Tile":
-            tiles.append((child.attrib['name'], int(child.attrib['x'])*tile_size,
-                          int(child.attrib['y'])*tile_size, int(child.attrib['sheetindex']),
-                          int(child.attrib['tileCollision'], 2)))
-        elif child.tag == "TileGroup":
-            min_x = int(child.attrib['minx'])
-            max_x = int(child.attrib['maxx'])
-            min_y = int(child.attrib['miny'])
-            max_y = int(child.attrib['maxy'])
-
-            for x in range(min_x, max_x):
-                for y in range(min_y, max_y):
-                    tiles.append((child.attrib['name'], x*tile_size, y*tile_size,
-                                  int(child.attrib['sheetindex']), int(child.attrib['tileCollision'], 2)))
-
-    return (tiles, width, height)
-
-
-def load_players(player_info, players, actions):
-    global TREE
-
-    root = TREE.getroot()
-    for child in root:
-        atts = child.attrib
-        
-        if 'alienBeige' in atts['name']:
-            player_info = load_player(player_info, players.BEIGE, actions, atts)
-        elif 'alienBlue' in atts['name']:
-            player_info = load_player(player_info, players.BLUE, actions, atts)
-        elif 'alienGreen' in atts['name']:
-            player_info = load_player(player_info, players.GREEN, actions, atts)
-        elif 'alienPink' in atts['name']:
-            player_info = load_player(player_info, players.PINK, actions, atts)
-        elif 'alienYellow' in atts['name']:
-            player_info = load_player(player_info, players.YELLOW, actions, atts)             
-                
-    return player_info
-
-def load_player(player_info, player_index, actions, atts):
-    info = [(int(atts['x']), int(atts['y'])), (int(atts['width']), int(atts['height']))]
-    
-    if 'climb' in atts['name']:
-        player_info[player_index][actions.CLIMB].append(info)
-    elif 'duck' in atts['name']:
-        player_info[player_index][actions.DUCK].append(info)
-    elif 'front' in atts['name']:
-        player_info[player_index][actions.FRONT].append(info)
-    elif 'hit' in atts['name']:
-        player_info[player_index][actions.HIT].append(info)
-    elif 'jump' in atts['name']:
-        player_info[player_index][actions.JUMP].append(info)
-    elif 'stand' in atts['name']:
-        player_info[player_index][actions.STAND].append(info)                    
-    elif 'swim' in atts['name']:
-        player_info[player_index][actions.SWIM].append(info)
-    elif 'walk' in atts['name']:
-        player_info[player_index][actions.WALK].append(info)
-
-    return player_info
-
-"""

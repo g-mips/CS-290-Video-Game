@@ -1,5 +1,0 @@
-import xml.etree.ElementTree
-
-e = xml.etree.ElementTree.parse('thefile.xml').getroot()
-
-print(e)

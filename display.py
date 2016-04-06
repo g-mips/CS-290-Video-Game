@@ -1,6 +1,8 @@
 import pygame
 import re
 
+import physics
+
 SCREEN = None
 
 COLORS = {
@@ -101,29 +103,43 @@ def render(level):
     #enemy_player_hit_list = pygame.sprite.groupcollide(objects["ENEMIES"], objects["PLAYER"], False, False)
     #enemy_map_hit_list    = pygame.sprite.groupcollide(objects["ENEMIES"], objects["MAP"], False, False)
     
-    
-    if not level["RENDERED"]:
-        for group in objects:
-            objects[group].draw(SCREEN)
-        level["RENDERED"] = True
-        pygame.display.flip()
-    else:
-        map_hit_list   = pygame.sprite.groupcollide(objects["PLAYER"], objects["MAP"], False, False)
-        map_hit_list.update(pygame.sprite.groupcollide(objects["ENEMIES"], objects["MAP"], False, False))
-        map_draw_list = pygame.sprite.OrderedUpdates()
+    #if not level["RENDERED"]:
+    rect_list = objects.draw(SCREEN)
+        #for group in objects:
+        #    objects[group].draw(SCREEN)
+    level["RENDERED"] = True
+    pygame.display.update(rect_list)
+    #else:
+    #    map_draw_list = pygame.sprite.OrderedUpdates()
 
-        rect_list = [ objects["PLAYER"].sprite.rect ]
-        rect_list.extend(objects["ENEMIES"].sprites())
-        
-        for player in map_hit_list:
-            for tile in map_hit_list[player]:
-                map_draw_list.add(tile)
+    #rect_list = [ objects["PLAYER"].sprite.rect ]
+    #    rect_list.extend(objects["ENEMIES"].sprites())
 
-        rect_list.extend(map_draw_list.draw(SCREEN))
-        objects["ENEMIES"].draw(SCREEN)
-        objects["PLAYER"].draw(SCREEN)
+    #    map_hit_list = pygame.sprite.groupcollide(objects["MAP"], objects["HUD"], False, False)
+    #    map_hit_list.update(pygame.sprite.groupcollide(objects["PLAYER"], objects["MAP"], False, False))
+    #    map_hit_list.update(pygame.sprite.groupcollide(objects["ENEMIES"], objects["MAP"], False, False))
+
+    #    for group in map_hit_list:
+    #        for tile in sorted(map_hit_list[group]):
+    #            map_draw_list.add(tile)
+
+    #    for object in sorted(physics.PHYSICS_SYSTEM.objects_to_update):
+    #        map_draw_list.add(object)
+
+    #    map_hit_list = pygame.sprite.groupcollide(map_draw_list, objects["MAP"], False, False)
+
+    #    for main_tile in map_hit_list:
+    #        for tile in sorted(map_hit_list[main_tile]):
+    #            map_draw_list.add(tile)
         
-        pygame.display.update(rect_list)
+    #    rect_list.extend(map_draw_list.draw(SCREEN))
+    #    rect_list.extend(objects["HUD"].draw(SCREEN))
+    #    objects["ENEMIES"].draw(SCREEN)
+    #    objects["PLAYER"].draw(SCREEN)
+        
+    #    pygame.display.update(rect_list)
+
+    #    physics.PHYSICS_SYSTEM.objects_to_update = []
 
     #else:
     #objects["MAP"].draw(SCREEN)

@@ -1,9 +1,0 @@
-import pygame
-
-def update():
-    pass
-
-
-class GameObject(object):
-    def __init__(self):
-        pass
