@@ -5,33 +5,25 @@ import xml_parser
 import display
 
 
-class PlayerActions(object):
-    DUCK  = "_duck"
-    FRONT = "_front"
-    HIT   = "_hurt"
-    JUMP  = "_jump"
-    STAND = "_stand"
-    WALK  = "_walk"
-
-class EnemyActions(object):
-    STAND = "\."
-    DEAD  = "_dead"
-    MOVE  = "_move"
-
 class GameObject(display.Renderable):
     def __init__(self, id, sprite_map_xml, sprite_map, sprite_name, x, y,
-                 scale_factor, collision, z_index,
+                 scale_factor, collision, z_index, type,
                  input, physics, graphics):
         super(GameObject, self).__init__(display.get_image(sprite_map),
                                          xml_parser.load_sprite_map_info(sprite_map_xml), z_index)
-        # Components
         self.id = id
+        self.type = type
+
+        # Components
         self.input = input
         self.physics = physics
         self.graphics = graphics
 
         # Status of GameObject
         self.isAlive  = True
+        self.health   = 0
+        self.prev_health = 0
+        self.hit_time = 0
 
         # Scaling Factor (width, height)
         self.scale_factor = scale_factor
@@ -41,9 +33,13 @@ class GameObject(display.Renderable):
         self.dy = 0
 
         # Position
+        self.oldx = x*self.scale_factor[0]
+        self.oldy = y*self.scale_factor[1]
         self.x = x*self.scale_factor[0]
         self.y = y*self.scale_factor[1]
 
+        self.dirty = False
+        
         # Action of Sprite
         self.current_action = None
 
@@ -65,27 +61,12 @@ class GameObject(display.Renderable):
         self.set_rect()
 
         self.air_time = 0
+        self.pre_rendered = False
         
     def update(self):
         self.input.update(self)
         self.physics.update(self)
         self.graphics.update(self)
-
-    def pre_render(self):
-        sprites_info = self.get_sprite_info(self.sprite_name + self.current_action)
-        self.frame = (self.frame + (self.clock.tick() / 100.0)) % len(sprites_info)
-        sprite_info = sprites_info[int(self.frame)]
-        self.set_image(sprite_info[0][0], sprite_info[0][1], sprite_info[1][0], sprite_info[1][1])
-        self.set_rect()
-
-class Mobile(GameObject):
-    def __init__(self, sprite_sheet_xml, sprite_sheet, sprite_name, x, y,
-                 scale_factor, collision, z_index,
-                 input, physics, graphics):
-        super(Mobile, self).__init__(input, physics, graphics, sprite_sheet, sprite_sheet_xml,
-                                     z_index, x, y, sprite_name, scale_factor, collision)
-
-        self.air_time = 0
 
     def pre_render(self):
         if not self.pre_rendered:
@@ -95,32 +76,6 @@ class Mobile(GameObject):
             self.set_image(sprite_info[0][0], sprite_info[0][1], sprite_info[1][0], sprite_info[1][1])
             self.set_rect()
             self.pre_rendered = True
-    
-    def get_rect(self):
-        return pygame.Rect((self.x-self.dx, self.y-self.dy), (self.scale_factor[0], self.scale_factor[1]))
-
-class Tile(GameObject):
-    def __init__(self, sprite_sheet_xml, sprite_sheet, tile_name, x, y,
-                 scale_factor, collision, z_index,
-                 input, physics, graphics):
-        super(Tile, self).__init__(input, physics, graphics, sprite_sheet, sprite_sheet_xml,
-                                   z_index, x, y, tile_name, scale_factor, collision)
-        self.tile_is_set = False
-
-        
-    def pre_render(self):
-        '''
-        Sprite update.
-
-        sprite_info: (x, y), (width, height)
-        '''
-        if not self.tile_is_set:
-            sprites_info = self.get_sprite_info(self.sprite_name)
-            self.frame = (self.frame + (self.clock.tick() / 100.0)) % len(sprites_info)
-            sprite_info = sprites_info[int(self.frame)]
-            self.set_image(sprite_info[0][0], sprite_info[0][1], sprite_info[1][0], sprite_info[1][1])
-            self.set_rect()
-            self.tile_is_set = True
 
 if __name__ == "__main__":
     xml_parser.load_xml(MAIN_XML_SHEET)

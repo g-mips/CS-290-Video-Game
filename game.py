@@ -10,7 +10,9 @@ import physics
 LEVEL = {
     "OBJECTS":  {},
     "RENDERED": False,
-    "LOADED":   False
+    "LOADED":   False,
+    "BACKGROUND": None,
+    "HUD": None
 }
 
 CLOCK  = pygame.time.Clock()
@@ -29,6 +31,7 @@ def initialize(width, height, title):
     '''
     Starts pygame, initializes the display, makes the mouse invisible, and registers quit events.
     '''
+    global LEVEL
     
     num_successes, num_fails = pygame.init()
 
@@ -39,6 +42,9 @@ def initialize(width, height, title):
     display.init(width, height, title)
     physics.PHYSICS_SYSTEM.width = width
     physics.PHYSICS_SYSTEM.height = height
+
+    LEVEL["BACKGROUND"] = pygame.Surface((width, height), pygame.SRCALPHA, 32).convert_alpha()
+    LEVEL["HUD"] = pygame.Surface((width, height), pygame.SRCALPHA, 32).convert_alpha()
 
     event_handler.register("QUIT", quit)
     event_handler.register("KEYDOWN", key_quit)
@@ -84,7 +90,8 @@ def update():
 
     physics.PHYSICS_SYSTEM.load_objects(LEVEL["OBJECTS"])
         
-    for object in LEVEL["OBJECTS"]:
-        object.update()
-        object.pre_render()
+    for layer in LEVEL["OBJECTS"]:
+        for object in LEVEL["OBJECTS"][layer]:
+            object.update()
+            object.pre_render()
 

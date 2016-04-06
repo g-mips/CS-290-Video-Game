@@ -9,14 +9,11 @@ import graphics
 import event_handler
 
 def load_level(level):
-    game_objects = pygame.sprite.LayeredUpdates()#{
-       # "HUD":     pygame.sprite.LayeredUpdates(),
-       # "MAP":     pygame.sprite.LayeredUpdates(),
-       # "ENEMIES": pygame.sprite.LayeredUpdates(),
-       # "ITEMS":   pygame.sprite.LayeredUpdates(),
-       # "PLAYER":  pygame.sprite.GroupSingle(),
-       # "ALL":     pygame.sprite.LayeredUpdates()
-    #}
+    game_objects = {
+        "BACKGROUND": [],
+        "HUD": [],
+        "MAIN": []
+    }
 
     level_xml = None
     sprites   = None
@@ -37,20 +34,21 @@ def load_level(level):
             [sprite["SCALE_X"], sprite["SCALE_Y"]],
             sprite["COLLISION"],
             sprite["Z_INDEX"],
+            sprite["TYPE"],
             None,
             None,
             None
         )
 
         id += 1
-        layer = 0
+        layer = ""
         
         if sprite["TYPE"] == "Tile":
             tile.input = game_input.Input()
             tile.physics = physics.MapPhysics()
             tile.graphics = graphics.MapGraphics()
 
-            layer = 0
+            layer = "BACKGROUND"
         elif sprite["TYPE"] == "Player":
             tile.input = game_input.PlayerInput()
             tile.physics = physics.MobilePhysics()
@@ -59,21 +57,21 @@ def load_level(level):
             event_handler.register("KEYDOWN", tile.input.register_event)
             event_handler.register("KEYUP", tile.input.register_event)
 
-            layer = 2
+            layer = "MAIN"
         elif sprite["TYPE"] == "Hud":
             tile.input = game_input.Input()
             tile.physics = physics.MapPhysics()
             tile.graphics = graphics.MapGraphics()
 
-            layer = 1
+            layer = "HUD"
         elif sprite["TYPE"] == "Enemy":
             tile.input = game_input.EnemyInput()
             tile.physics = physics.MobilePhysics()
             tile.graphics = graphics.EnemyGraphics()
 
-            layer = 2
+            layer = "MAIN"
 
-        game_objects.add(tile, layer=layer)
+        game_objects[layer].append(tile)
         
     #for sprite in sprites:
     #    if sprite["TYPE"] == "Tile":

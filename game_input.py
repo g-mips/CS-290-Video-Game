@@ -10,6 +10,13 @@ class Input(object):
     def update(self, game_object):
         pass
 
+class HealthInput(Input):
+    def __init__(self):
+        super(EnemyInput, self).__init__()
+        self.
+        
+    def update(self, game_object):
+        
 class EnemyInput(Input):
     def __init__(self):
         super(EnemyInput, self).__init__()

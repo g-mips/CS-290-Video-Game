@@ -1,6 +1,6 @@
 import inspect
 
-DEBUG = True
+DEBUG = False
 
 def debug(message):
     if DEBUG:
