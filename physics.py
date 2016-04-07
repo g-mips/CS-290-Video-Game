@@ -61,6 +61,7 @@ class PhysicsSystem(object):
                     if tile.type == "Enemy" and game_object.type == "Player" and \
                        game_object.hit_time == 0:
                         game_object.health -= 1
+                        checked_both[0] = True
                     
                     # Check dx
                     if not checked_both[0]:
@@ -137,8 +138,6 @@ class MobilePhysics(Physics):
         PHYSICS_SYSTEM.edge_collisions(game_object)
         PHYSICS_SYSTEM.mobile_collisions(game_object, PHYSICS_SYSTEM.objects)
 
-        #print("DY: " + str(game_object.dy))
-
         game_object.dirty = True
 
         game_object.oldx = game_object.x
@@ -152,9 +151,9 @@ class MobilePhysics(Physics):
         # Air Time
         if game_object.air_time > 0 and game_object.air_time < 10:
             game_object.air_time += 1
-        elif game_object.air_time >= 10 and game_object.air_time < 30:
+        elif game_object.air_time >= 10 and game_object.air_time < 50:
             game_object.dy += 0.05
             game_object.air_time += 1
-        elif game_object.air_time >= 30:
+        elif game_object.air_time >= 50:
             game_object.dy = 3.0
             game_object.air_time = 0
