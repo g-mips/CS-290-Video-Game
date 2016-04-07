@@ -39,7 +39,8 @@ def load_level(level_xml):
                             "X":            x,
                             "Y":            y,
                             "SCALE_X":      int(child.attrib['scaleX']),
-                            "SCALE_Y":      int(child.attrib['scaleY']),                        
+                            "SCALE_Y":      int(child.attrib['scaleY']),
+                            "SCALE_FACT":   float(child.attrib['scaleFactor']),
                             "COLLISION":    int(child.attrib['collision'], 2),
                             "SPRITE_SHEET": child.attrib['spriteSheet'],
                             "XML_SHEET":    child.attrib['xmlSheet'],
@@ -53,6 +54,7 @@ def load_level(level_xml):
                     "Y":            int(child.attrib['y']),
                     "SCALE_X":      int(child.attrib['scaleX']),
                     "SCALE_Y":      int(child.attrib['scaleY']),
+                    "SCALE_FACT":   float(child.attrib['scaleFactor']),
                     "COLLISION":    int(child.attrib['collision'], 2),
                     "SPRITE_SHEET": child.attrib['spriteSheet'],
                     "XML_SHEET":    child.attrib['xmlSheet'],
@@ -93,7 +95,7 @@ def load_sprite_map_info(sprite_map_xml):
         
         for child in sprite_map:
             atts = child.attrib
-            info = [(int(atts['x']), int(atts['y'])), (int(atts['width']), int(atts['height']))]
+            info = [[int(atts['x']), int(atts['y'])], [int(atts['width']), int(atts['height'])]]
             
             map_info[atts['name']] = info
             

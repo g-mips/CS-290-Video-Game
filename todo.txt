@@ -1,0 +1,9 @@
+TODO:
+- Fix falling collision
+- Add death
+- Add lives
+- Add arrow and note to screen
+- Add sound effects
+- Add game over screen
+- Add start screen
+- Add more levels

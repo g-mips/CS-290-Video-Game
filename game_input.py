@@ -11,16 +11,22 @@ class Input(object):
         pass
 
 class HealthInput(Input):
-    def __init__(self):
-        super(EnemyInput, self).__init__()
+    def __init__(self, id):
+        super(HealthInput, self).__init__()
+        self.id = id
+        self.current_health = 2
+
+    def get_health_change(self, event):
+        if self.id*3 <= event.__dict__["health"] < self.id*3+2:
+            self.current_health = event.__dict__["health"] % 3
         
     def update(self, game_object):
-        pass
+        game_object.health = self.current_health
     
 class EnemyInput(Input):
     def __init__(self):
         super(EnemyInput, self).__init__()
-        self.acceleration = 1.0
+        self.acceleration = 4.0
 
     def update(self, game_object):
         if game_object.dx == 0:
@@ -28,15 +34,15 @@ class EnemyInput(Input):
         game_object.dx = self.acceleration
 
 class PlayerInput(Input):
-    ACCELERATION = 3.0
-    AVAILABLE_KEYS = [ pygame.K_RIGHT, pygame.K_LEFT, pygame.K_DOWN, pygame.K_SPACE, pygame.K_RETURN ]
+    ACCELERATION = 7.0
+    AVAILABLE_KEYS = [ pygame.K_RIGHT, pygame.K_LEFT, pygame.K_DOWN, pygame.K_SPACE ]
     
     def __init__(self):
         super(PlayerInput, self).__init__()
 
     def register_event(self, event):
         self.events.append(event)
-    
+
     def update(self, game_object):
         '''
         This will update the game_object's movement. by checking the keys that are up and down.

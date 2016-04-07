@@ -12,7 +12,8 @@ bindings = {
     pygame.MOUSEBUTTONUP:   "MOUSEBUTTONUP",
     pygame.MOUSEBUTTONDOWN: "MOUSEBUTTONDOWN",
     pygame.VIDEORESIZE:     "VIDEORESIZE",
-    pygame.VIDEOEXPOSE:     "VIDEOEXPOSE"
+    pygame.VIDEOEXPOSE:     "VIDEOEXPOSE",
+    pygame.USEREVENT:       "USEREVENT"
 }
 
 handlers = {
@@ -24,7 +25,8 @@ handlers = {
     "MOUSEBUTTONUP":   [],
     "MOUSEBUTTONDOWN": [],
     "VIDEORESIZE":     [],
-    "VIDEOEXPOSE":     []
+    "VIDEOEXPOSE":     [],
+    "USEREVENT":       []
 }
 
 def register(event, handler):

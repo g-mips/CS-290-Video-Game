@@ -57,6 +57,8 @@ def game_loop(fps):
     '''
     global CLOCK
 
+    logger.debug("Start game loop")
+
     while True:
         event_handler.handle_events()
         update()
@@ -70,6 +72,8 @@ def load_level(level):
     This will load in all the objects of the level 'level' into OBJECTS
     '''
     global OBJECTS
+
+    logger.debug("Loading level: " + str(level))
     
     LEVEL["OBJECTS"]  = scenes.load_level(level)
     LEVEL["RENDERED"] = False
@@ -91,7 +95,7 @@ def update():
     physics.PHYSICS_SYSTEM.load_objects(LEVEL["OBJECTS"])
         
     for layer in LEVEL["OBJECTS"]:
-        for object in LEVEL["OBJECTS"][layer]:
+        for object in layer:
             object.update()
             object.pre_render()
 
