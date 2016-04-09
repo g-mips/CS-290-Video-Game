@@ -48,6 +48,9 @@ def register(event, handler):
                      str(handler) + " -- is in handlers[event]")
 
 def remove(event, handler):
+    '''
+    Remove the handler found in the event, event.
+    '''
     if event in handlers and handler in handlers[event]:
         logger.debug(event)
         handlers[event].remove(handler)
@@ -56,6 +59,9 @@ def remove(event, handler):
                      str(handler) + " -- is not in handlers[event]")
 
 def remove_all():
+    '''
+    Removes all the handlers
+    '''
     for event in handlers:
         handlers[event] = []
 

@@ -1,16 +1,18 @@
-p3_duck = 365 98 69 71
-p3_front = 0 196 66 92
-p3_hurt = 438 0 69 92
-p3_jump = 438 93 67 94
-p3_stand = 67 196 66 92
-p3_walk01 = 0 0 72 97
-p3_walk02 = 73 0 72 97
-p3_walk03 = 146 0 72 97
-p3_walk04 = 0 98 72 97
-p3_walk05 = 73 98 72 97
-p3_walk06 = 146 98 72 97
-p3_walk07 = 219 0 72 97
-p3_walk08 = 292 0 72 97
-p3_walk09 = 219 98 72 97
-p3_walk10 = 365 0 72 97
-p3_walk11 = 292 98 72 97
+<TextureAtlas imagePath="p3_spritesheet.png">
+  <SubTexture name="p3_duck" x="365" y="98" width="69" height="71" />
+  <SubTexture name="p3_front" x="0" y="196" width="66" height="92" />
+  <SubTexture name="p3_hurt"  x="438" y="0" width="69" height="92" />
+  <SubTexture name="p3_jump"  x="438" y="93" width="67" height="94" />
+  <SubTexture name="p3_stand"  x="67" y="196" width="66" height="92" />
+  <SubTexture name="p3_walk01"  x="0" y="0" width="72" height="97" />
+  <SubTexture name="p3_walk02"  x="73" y="0" width="72" height="97" />
+  <SubTexture name="p3_walk03"  x="146" y="0" width="72" height="97" />
+  <SubTexture name="p3_walk04"  x="0" y="98" width="72" height="97" />
+  <SubTexture name="p3_walk05"  x="73" y="98" width="72" height="97" />
+  <SubTexture name="p3_walk06"  x="146" y="98" width="72" height="97" />
+  <SubTexture name="p3_walk07"  x="219" y="0" width="72" height="97" />
+  <SubTexture name="p3_walk08"  x="292" y="0" width="72" height="97" />
+  <SubTexture name="p3_walk09"  x="219" y="98" width="72" height="97" />
+  <SubTexture name="p3_walk10"  x="365" y="0" width="72" height="97" />
+  <SubTexture name="p3_walk11"  x="292" y="98" width="72" height="97" />
+</TextureAtlas>

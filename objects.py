@@ -7,6 +7,11 @@ import display
 import logger
 
 class GameObject(display.Renderable):
+    '''
+    A Generic Game Object. In practice, this probably should've been abstracted more into
+    things that are a part of a map, things that can move, etc. However, since I used a component
+    overview, this became the same all the way around.
+    '''
     def __init__(self, id, sprite_map_xml, sprite_map, sprite_name, x, y, scale_factor,
                  collision, z_index, type, input, physics, graphics):
         super(GameObject, self).__init__(display.get_image(sprite_map),
@@ -66,11 +71,19 @@ class GameObject(display.Renderable):
         self.keys_up   = []
         
     def update(self):
+        '''
+        Update the state of the object by checking the inputs, the physics that
+        must happen to the object, and then getting the correct graphics after
+        finalizing the object's position.
+        '''
         self.input.update(self)
         self.physics.update(self)
         self.graphics.update(self)
 
     def get_actions_info(self, action_name):
+        '''
+        This gets information regarding the action that the object is performing.
+        '''
         actions_info = []
 
         sprite_re = "^" + action_name
@@ -83,10 +96,19 @@ class GameObject(display.Renderable):
         return actions_info
     
     def set_image(self, x, y, width, height):
+        '''
+        This will set the image of the object to the x and y location with a
+        width and height of widht and height from its sprite_map.
+        '''
         self.sprite_map.set_clip(pygame.Rect(x, y, width, height))
         self.image = self.sprite_map.subsurface(self.sprite_map.get_clip())
 
     def render(self, screen):
+        '''
+        This will blit the current image to the screen at position x and y. It also
+        scales according to width and height and flips the image according to 
+        x_flip and y_flip.
+        '''
         screen.blit(
             pygame.transform.flip(
                 pygame.transform.scale(
@@ -102,16 +124,25 @@ class GameObject(display.Renderable):
         self.dirty = False
         
     def pre_render(self):
+        '''
+        This gets the current frame of the current action and sets the image to that sprite. It then
+        does any last minute position check based on the new action. However, by adjusting correctly,
+        no further collision detecting needs to be done.
+        '''
         if self.dirty:
+            # Get the frame of the action
             actions_info = self.get_actions_info(self.sprite_name + self.current_action)
             self.frame = (self.frame + (self.clock.tick() / 100.0)) % len(actions_info)
             action_info = actions_info[int(self.frame)]
 
+            # Set the action to the image
             self.set_image(action_info[0][0], action_info[0][1], action_info[1][0], action_info[1][1])
 
+            # Save old information
             self.oldwidth = self.width
             self.oldheight = self.height
-            
+
+            # Save new information
             self.width  = action_info[1][2]
             self.height = action_info[1][3]
 
@@ -131,11 +162,13 @@ class GameObject(display.Renderable):
                 diff = self.oldheight - self.height
                 self.y += diff
 
+            # Save old rectangle
             self.oldrect = pygame.Rect(
                 (self.oldx, self.oldy),
                 (self.oldwidth, self.oldheight)
             )
-            
+
+            # Save new rectangle
             self.rect = pygame.Rect(
                 (self.x, self.y),
                 (self.width, self.height)

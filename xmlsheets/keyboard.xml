@@ -1,0 +1,9 @@
+<TextureAtlas imagePath="keyboard.png">
+  <SubTexture name="keyboardA" x="0" y="0" width="492" height="341" />
+  <SubTexture name="keyboardB" x="0" y="0" width="492" height="341" />
+  <SubTexture name="keyboardC" x="0" y="0" width="492" height="341" />
+  <SubTexture name="keyboardD" x="0" y="0" width="492" height="341" />
+  <SubTexture name="keyboardE" x="0" y="0" width="492" height="341" />
+  <SubTexture name="keyboardF" x="0" y="0" width="492" height="341" />
+  <SubTexture name="keyboardG" x="0" y="0" width="492" height="341" />
+</TextureAtlas>

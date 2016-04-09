@@ -9,6 +9,9 @@ import graphics
 import event_handler
 
 def add_fire_ball(id, x, y, direction):
+    '''
+    This adds a fire ball to the scene at position x, y. It will be launched in direction of direction.
+    '''
     xml_sheet = xml_parser.load_sprite_map_info(os.path.join('xmlsheets', 'items_spritesheet.xml'))
 
     fireball = xml_sheet['fireball.png']
@@ -34,18 +37,21 @@ def add_fire_ball(id, x, y, direction):
     return tile
     
 def load_level(level):
+    '''
+    This loads the level, level into the game.
+    '''
     game_objects = [ [], [], [] ]
 
     level_xml = None
     sprites   = None
     id = 0
     
-    if level == 1:
-        level_xml = os.path.join('xmlsheets', 'level_one.xml')
-        sprites = xml_parser.load_level(level_xml)
+    level_xml = os.path.join('xmlsheets', 'level_' + str(level) + '.xml')
+    sprites = xml_parser.load_level(level_xml)
 
     health_tile_id = 0
-    
+
+    # Add all the sprites found in the xml sheet.
     for sprite in sprites:
         health      = 0
         prev_health = 0

@@ -9,11 +9,14 @@
   <Tile name="grassRight.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="15" y="8" zIndex="1" />
   <Tile name="signRight.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="0000" scaleX="50" scaleY="50" scaleFactor="2.56" x="0" y="7" zIndex="1" />
   <Tile name="signExit.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="0000" scaleX="50" scaleY="50" scaleFactor="2.56" x="15" y="7" zIndex="1" />
-  <Player name="p1" xmlSheet="p1_spritesheet.xml" spriteSheet="p1_spritesheet.png" collision="1111" scaleX="52" scaleY="72" scaleFactor="1.38" x="0" y="1" zIndex="0" attack="A" />
-  <Enemy name="fly" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="13" y="1" zIndex="0" />
-  <Enemy name="fly" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="11" y="3" zIndex="0" />
+  <Player name="p1" xmlSheet="p1_spritesheet.xml" spriteSheet="p1_spritesheet.png" collision="1111" scaleX="52" scaleY="52" scaleFactor="1.38" x="0" y="6" zIndex="0" attack="C" />
+  <Enemy name="mouse" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="11" y="6" zIndex="0" />
+  <Enemy name="wormPink" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="9" y="6" zIndex="0" />
+  <Enemy name="wormPink" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="7" y="6" zIndex="0" />
+  <Enemy name="wormGreen" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="5" y="6" zIndex="0" />
+  <Enemy name="wormPink" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="3" y="6" zIndex="0" />
   <Hud name="hudHeart" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="0000" scaleX="50" scaleY="50" scaleFactor="2.56" x="1" y="1" zIndex="0" />
   <Hud name="hudHeart" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="0000" scaleX="50" scaleY="50" scaleFactor="2.56" x="2" y="1" zIndex="0" />
   <Hud name="hudHeart" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="0000" scaleX="50" scaleY="50" scaleFactor="2.56" x="3" y="1" zIndex="0" />
-
+  <Hud name="keyboardC" xmlSheet="keyboard.xml" spriteSheet="keyboardC.png" collision="0000" scaleX="1" scaleY="1" scaleFactor="2.00" x="300" y="1" zIndex="0" />
 </Map>

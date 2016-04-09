@@ -1,0 +1,24 @@
+<Map width="16" height="12">
+  <TileGroup name="sandCenter.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" minx="0" maxx="16" miny="9" maxy="13" zIndex="1" />
+  <TileGroup name="sandCenter.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" minx="1" maxx="15" miny="8" maxy="9" zIndex="1" />
+  <TileGroup name="bg.png" xmlSheet="bg.xml" spriteSheet="bg.png" collision="0000" scaleX="50" scaleY="50" scaleFactor="2.56" minx="0" maxx="16" miny="0" maxy="13" zIndex="0" />
+  <Tile name="cloud1.png" xmlSheet="items_spritesheet.xml" spriteSheet="items_spritesheet.png" collision="0000" scaleX="128" scaleY="71" scaleFactor="1" x="5" y="3" zIndex="1" />
+  <Tile name="cloud1.png" xmlSheet="items_spritesheet.xml" spriteSheet="items_spritesheet.png" collision="0000" scaleX="128" scaleY="71" scaleFactor="1" x="0" y="1" zIndex="1" />
+  <Tile name="cloud2.png" xmlSheet="items_spritesheet.xml" spriteSheet="items_spritesheet.png" collision="0000" scaleX="129" scaleY="71" scaleFactor="1" x="2" y="2" zIndex="1" />
+  <Tile name="sandCenter.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="0" y="8" zIndex="1" />
+  <Tile name="sandCenter.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="15" y="8" zIndex="1" />
+  <Tile name="signRight.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="0000" scaleX="50" scaleY="50" scaleFactor="2.56" x="0" y="7" zIndex="1" />
+  <Tile name="signExit.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="0000" scaleX="50" scaleY="50" scaleFactor="2.56" x="15" y="7" zIndex="1" />
+  <Player name="p3" xmlSheet="p3_spritesheet.xml" spriteSheet="p3_spritesheet.png" collision="1111" scaleX="52" scaleY="52" scaleFactor="1.38" x="0" y="6" zIndex="0" attack="G" />
+  <Enemy name="mouse" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="7" y="6" zIndex="0" />
+  <Enemy name="fly" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="3" y="6" zIndex="0" />
+  <Enemy name="mouse" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="5" y="6" zIndex="0" />
+  <Enemy name="bee" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="12" y="6" zIndex="0" />
+  <Enemy name="bee" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="9" y="6" zIndex="0" />
+  <Enemy name="wormGreen" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="4" y="6" zIndex="0" />
+  <Enemy name="wormPink" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="5" y="6" zIndex="0" />
+  <Hud name="hudHeart" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="0000" scaleX="50" scaleY="50" scaleFactor="2.56" x="1" y="1" zIndex="0" />
+  <Hud name="hudHeart" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="0000" scaleX="50" scaleY="50" scaleFactor="2.56" x="2" y="1" zIndex="0" />
+  <Hud name="hudHeart" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="0000" scaleX="50" scaleY="50" scaleFactor="2.56" x="3" y="1" zIndex="0" />
+  <Hud name="keyboardG" xmlSheet="keyboard.xml" spriteSheet="keyboardG.png" collision="0000" scaleX="1" scaleY="1" scaleFactor="2.00" x="300" y="1" zIndex="0" />
+</Map>

@@ -1,0 +1,19 @@
+<Map width="16" height="12">
+  <TileGroup name="grassCenter.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" minx="0" maxx="16" miny="9" maxy="13" zIndex="1" />
+  <TileGroup name="grassMid.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" minx="1" maxx="15" miny="8" maxy="9" zIndex="1" />
+  <TileGroup name="bg.png" xmlSheet="bg.xml" spriteSheet="bg.png" collision="0000" scaleX="50" scaleY="50" scaleFactor="2.56" minx="0" maxx="16" miny="0" maxy="13" zIndex="0" />
+  <Tile name="cloud1.png" xmlSheet="items_spritesheet.xml" spriteSheet="items_spritesheet.png" collision="0000" scaleX="128" scaleY="71" scaleFactor="1" x="5" y="3" zIndex="1" />
+  <Tile name="cloud1.png" xmlSheet="items_spritesheet.xml" spriteSheet="items_spritesheet.png" collision="0000" scaleX="128" scaleY="71" scaleFactor="1" x="0" y="1" zIndex="1" />
+  <Tile name="cloud2.png" xmlSheet="items_spritesheet.xml" spriteSheet="items_spritesheet.png" collision="0000" scaleX="129" scaleY="71" scaleFactor="1" x="2" y="2" zIndex="1" />
+  <Tile name="grassLeft.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="0" y="8" zIndex="1" />
+  <Tile name="grassRight.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="15" y="8" zIndex="1" />
+  <Tile name="signRight.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="0000" scaleX="50" scaleY="50" scaleFactor="2.56" x="0" y="7" zIndex="1" />
+  <Tile name="signExit.png" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="0000" scaleX="50" scaleY="50" scaleFactor="2.56" x="15" y="7" zIndex="1" />
+  <Player name="p1" xmlSheet="p1_spritesheet.xml" spriteSheet="p1_spritesheet.png" collision="1111" scaleX="52" scaleY="52" scaleFactor="1.38" x="0" y="6" zIndex="0" attack="A" />
+  <Enemy name="fly" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="13" y="6" zIndex="0" />
+  <Enemy name="fly" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="1111" scaleX="50" scaleY="50" scaleFactor="2.56" x="11" y="6" zIndex="0" />
+  <Hud name="hudHeart" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="0000" scaleX="50" scaleY="50" scaleFactor="2.56" x="1" y="1" zIndex="0" />
+  <Hud name="hudHeart" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="0000" scaleX="50" scaleY="50" scaleFactor="2.56" x="2" y="1" zIndex="0" />
+  <Hud name="hudHeart" xmlSheet="spritesheet_complete.xml" spriteSheet="spritesheet_complete.png" collision="0000" scaleX="50" scaleY="50" scaleFactor="2.56" x="3" y="1" zIndex="0" />
+  <Hud name="keyboardA" xmlSheet="keyboard.xml" spriteSheet="keyboardA.png" collision="0000" scaleX="1" scaleY="1" scaleFactor="2.00" x="300" y="1" zIndex="0" />
+</Map>

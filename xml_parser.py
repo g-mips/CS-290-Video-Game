@@ -8,7 +8,7 @@ XML_SPRITE_SHEETS = {}
 
 def load_level(level_xml):
     '''
-    LEGIT
+    This loads the level given by the level_xml.
     '''
     global XML_SPRITE_SHEETS
 
@@ -68,25 +68,10 @@ def load_level(level_xml):
     
     return XML_SPRITE_SHEETS[level_xml]
 
-def load_map_info(xml_sheet):
-    '''
-    LEGIT
-    '''
-
-    map_info = {}
-        
-    root = xml.etree.ElementTree.parse(xml_sheet).getroot()
-    for child in root:
-        atts = child.attrib
-        info = [(int(atts['x']), int(atts['y'])), (int(atts['width']), int(atts['height']))]
-        
-        map_info[atts['name']] = info
-
-    return map_info
-
 def load_sprite_map_info(sprite_map_xml):
     '''
-    LEGIT
+    This loads all the information found in sprite_map_xml, which regards sprites found
+    on its companion "PNG" file.
     '''
     global XML_SPRITE_SHEETS
 
