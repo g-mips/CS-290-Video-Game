@@ -37,7 +37,7 @@ class HealthGraphics(Graphics):
              game_object.current_action != self.FULL:
             game_object.dirty = True
             game_object.current_action = self.FULL
-    
+
 class MapGraphics(Graphics):
     STANDARD = ""
     
@@ -97,12 +97,18 @@ class PlayerGraphics(Graphics):
             # Are we walking? standing? or ducking?
             if game_object.dx != 0:
                 game_object.current_action = self.WALK
+            elif game_object.attacking:
+                game_object.current_action = self.FRONT
+                game_object.dirty = True
             elif len(game_object.keys_down) == 0:
                 game_object.current_action = self.STAND
                 game_object.dirty = True
             elif game_object.keys_down[0] == pygame.K_DOWN:
                 game_object.current_action = self.DUCK
                 game_object.dirty = True
+
+        if game_object.health <= 0:
+            game_object.is_alive = False
                 
 class EnemyGraphics(Graphics):
     STAND = "\."
@@ -124,6 +130,10 @@ class EnemyGraphics(Graphics):
         elif game_object.dx < 0:
             game_object.x_flip = False
 
-        game_object.current_action = self.MOVE
+        if game_object.health <= 0:
+            game_object.current_action = self.DEAD
+            game_object.is_alive = False
+        else:
+            game_object.current_action = self.MOVE
 
         

@@ -61,6 +61,9 @@ def load_level(level_xml):
                     "Z_INDEX":      int(child.attrib['zIndex'])                
                 })
 
+                if child.tag == "Player":
+                    sprites[len(sprites)-1]["ATTACK"] = child.attrib['attack']
+
         XML_SPRITE_SHEETS[level_xml] = sorted(sprites, key=lambda k: k['Z_INDEX']) 
     
     return XML_SPRITE_SHEETS[level_xml]

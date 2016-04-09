@@ -8,15 +8,15 @@ import scenes
 import physics
 
 LEVEL = {
-    "OBJECTS":  {},
+    "OBJECTS":  [],
     "RENDERED": False,
-    "LOADED":   False,
-    "BACKGROUND": None,
-    "HUD": None
+    "LOADED":   False
 }
 
 CLOCK  = pygame.time.Clock()
 LEVEL_NUM  = 1
+
+GAME_OVER = False
 
 def quit(event):
     # TODO: Ask user if he really wants to quit
@@ -43,9 +43,6 @@ def initialize(width, height, title):
     physics.PHYSICS_SYSTEM.width = width
     physics.PHYSICS_SYSTEM.height = height
 
-    LEVEL["BACKGROUND"] = pygame.Surface((width, height), pygame.SRCALPHA, 32).convert_alpha()
-    LEVEL["HUD"] = pygame.Surface((width, height), pygame.SRCALPHA, 32).convert_alpha()
-
     event_handler.register("QUIT", quit)
     event_handler.register("KEYDOWN", key_quit)
 
@@ -56,13 +53,21 @@ def game_loop(fps):
     Game loops here indefinitely
     '''
     global CLOCK
+    global GAME_OVER
 
     logger.debug("Start game loop")
 
     while True:
         event_handler.handle_events()
-        update()
-        display.render(LEVEL)
+        if not GAME_OVER:
+            update()
+            objects_to_remove = display.render(LEVEL)
+
+            for layer in objects_to_remove:
+                for index in objects_to_remove[layer]:
+                    LEVEL["OBJECTS"][layer].pop(index)
+        else:
+            display.game_over()
 
         CLOCK.tick(fps)
 
@@ -88,14 +93,24 @@ def update():
     '''
     global LEVEL
     global LEVEL_NUM
+    global GAME_OVER
 
     if not LEVEL["LOADED"]:
         LEVEL["OBJECTS"] = scenes.load_level(LEVEL_NUM)
 
     physics.PHYSICS_SYSTEM.load_objects(LEVEL["OBJECTS"])
-        
+
     for layer in LEVEL["OBJECTS"]:
         for object in layer:
             object.update()
             object.pre_render()
+            if object.type == "Player" and not object.is_alive:
+                GAME_OVER = True
+            elif object.type == "Player" and object.attacking and object.buffer_attack == 0:
+                LEVEL["OBJECTS"][0].append(scenes.add_fire_ball(len(LEVEL["OBJECTS"]),
+                                                              object.x+object.width+1, object.y,
+                                                              object.x_flip))
+                object.buffer_attack = 15
+
+
 

@@ -8,6 +8,31 @@ import physics
 import graphics
 import event_handler
 
+def add_fire_ball(id, x, y, direction):
+    xml_sheet = xml_parser.load_sprite_map_info(os.path.join('xmlsheets', 'items_spritesheet.xml'))
+
+    fireball = xml_sheet['fireball.png']
+
+    tile = objects.GameObject(
+        id,
+        os.path.join('xmlsheets', 'items_spritesheet.xml'),
+        os.path.join('imgs', 'items_spritesheet.png'),
+        'fireball.png',
+        x,
+        y,
+        1.75,
+        15,
+        0,
+        "Item",
+        game_input.FireBallInput(direction),
+        physics.FireBallPhysics(),
+        graphics.MapGraphics()
+    )
+
+    tile.life_counter = 20
+    
+    return tile
+    
 def load_level(level):
     game_objects = [ [], [], [] ]
 
@@ -51,6 +76,8 @@ def load_level(level):
             event_handler.register("KEYDOWN", input_comp.register_event)
             event_handler.register("KEYUP", input_comp.register_event)
 
+            input_comp.define_attack(sprite["ATTACK"])
+            
             layer = 2
         # Are we dealing with a HUD tile?
         elif sprite["TYPE"] == "Hud":
@@ -72,6 +99,8 @@ def load_level(level):
             physics_comp = physics.MobilePhysics()
             graphics_comp = graphics.EnemyGraphics()
 
+            health = 1
+            prev_health = 1
             layer = 2
 
         # Create the tile

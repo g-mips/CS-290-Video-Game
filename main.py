@@ -5,7 +5,7 @@ import sys
 WIDTH  = 800
 HEIGHT = 600
 TITLE  = "Musical Alien"
-FPS    = 100
+FPS    = 30
 
 def main():
     '''

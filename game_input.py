@@ -10,6 +10,19 @@ class Input(object):
     def update(self, game_object):
         pass
 
+class FireBallInput(Input):
+    def __init__(self, direction):
+        self.direction = direction
+        self.acceleration = 12.0
+        
+    def update(self, game_object):
+        if self.direction:
+            game_object.x += -self.acceleration
+            game_object.dirty = True
+        else:
+            game_object.x += self.acceleration
+            game_object.dirty = True
+
 class HealthInput(Input):
     def __init__(self, id):
         super(HealthInput, self).__init__()
@@ -29,19 +42,45 @@ class EnemyInput(Input):
         self.acceleration = 4.0
 
     def update(self, game_object):
-        if game_object.dx == 0:
+        if game_object.dx == 0 or game_object.oldx == game_object.x:# or \
+           #(game_object.x > game_object.oldx and game_object.dx < 0) or \
+           #(game_object.x < game_object.oldx and game_object.dx > 0):
             self.acceleration = -self.acceleration
         game_object.dx = self.acceleration
 
 class PlayerInput(Input):
     ACCELERATION = 7.0
     AVAILABLE_KEYS = [ pygame.K_RIGHT, pygame.K_LEFT, pygame.K_DOWN, pygame.K_SPACE ]
+    ATTACK_KEY = None
     
     def __init__(self):
         super(PlayerInput, self).__init__()
 
     def register_event(self, event):
         self.events.append(event)
+
+    def define_attack(self, attack):
+        if attack == "A":
+            self.AVAILABLE_KEYS.append(pygame.K_a)
+            self.ATTACK_KEY = pygame.K_a
+        elif attack == "B":
+            self.AVAILABLE_KEYS.append(pygame.K_b)
+            self.ATTACK_KEY = pygame.K_b
+        elif attack == "C":
+            self.AVAILABLE_KEYS.append(pygame.K_c)
+            self.ATTACK_KEY = pygame.K_c
+        elif attack == "D":
+            self.AVAILABLE_KEYS.append(pygame.K_d)
+            self.ATTACK_KEY = pygame.K_d
+        elif attack == "E":
+            self.AVAILABLE_KEYS.append(pygame.K_e)
+            self.ATTACK_KEY = pygame.K_e
+        elif attack == "F":
+            self.AVAILABLE_KEYS.append(pygame.K_f)
+            self.ATTACK_KEY = pygame.K_f
+        elif attack == "G":
+            self.AVAILABLE_KEYS.append(pygame.K_g)
+            self.ATTACK_KEY = pygame.K_g
 
     def update(self, game_object):
         '''
@@ -70,8 +109,9 @@ class PlayerInput(Input):
             elif event == pygame.K_LEFT:
                 game_object.dx = 0
             elif event == pygame.K_SPACE:
-                game_object.dy = self.ACCELERATION
-                game_object.air_time = 0
+                game_object.air_time = 10
+            elif event == self.ATTACK_KEY:
+                game_object.attacking = False
 
         game_object.keys_up = []
         
@@ -83,6 +123,9 @@ class PlayerInput(Input):
                 game_object.dx = -self.ACCELERATION
             elif event == pygame.K_SPACE and game_object.dy == 0 and game_object.air_time == 0:
                 game_object.dy = -self.ACCELERATION
+                game_object.on_land = False
                 game_object.air_time = 1
                 game_object.keys_down.remove(event)
+            elif event == self.ATTACK_KEY:
+                game_object.attacking = True
 

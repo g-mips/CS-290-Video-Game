@@ -87,26 +87,50 @@ def render(level):
     global COLORS
 
     objects = level["OBJECTS"]
-    
+    objects_to_remove = { 0: [], 1: [], 2: [] }
+
     SCREEN.fill(COLORS["WHITE"])
 
     rect_list = []
 
+    layer_i = 0
     for layer in objects:
+        index = 0
         for object in layer:
             if object.dirty:
                 rect_list.append(object.oldrect)
                 rect_list.append(object.rect)
+            if not object.is_alive:
+                if not object.dirty:
+                    rect_list.append(object.oldrect)
+                    rect_list.append(object.rect)
+                objects_to_remove[layer_i].append(index)
+            index += 1
+        layer_i += 1
         
     for layer in objects:
         for object in layer:
             for rect in rect_list:
-                if object.rect.colliderect(rect) and object.hit_time % 2 == 0:
+                if object.rect.colliderect(rect) and object.hit_time % 2 == 0 and object.is_alive:
                     object.render(SCREEN)
                     break
         
     pygame.display.update(rect_list)
 
+    return objects_to_remove
+
+def game_over():
+    global SCREEN
+    global COLORS
+
+    SCREEN.fill(COLORS["WHITE"])
+
+    game_over = pygame.font.Font(None, 48)
+    game_over_text = game_over.render("GAME OVER", 1, COLORS["BLACK"])
+    SCREEN.blit(game_over_text, game_over_text.get_rect())
+
+    pygame.display.flip()
+    
 def get_image(filename):
     global IMAGES
 
